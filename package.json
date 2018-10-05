@@ -1,0 +1,26 @@
+{
+  "name": "timer-node",
+  "version": "0.0.0",
+  "description": "a simple timer object in nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/js-shelf/timer-node.git"
+  },
+  "keywords": [
+    "timer",
+    "node",
+    "timer",
+    "js",
+    "timer"
+  ],
+  "author": "Eyas Ranjous <https://github.com/eyas-ranjous>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/js-shelf/timer-node/issues"
+  },
+  "homepage": "https://github.com/js-shelf/timer-node#readme"
+}
