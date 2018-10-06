@@ -102,9 +102,9 @@ describe('timer-node', () => {
     });
   });
 
-  describe('.reset()', () => {
-    it('should reset the timer', () => {
-      timer.reset();
+  describe('.clear()', () => {
+    it('should clear the timer', () => {
+      timer.clear();
       expect(timer.seconds()).to.equal(null);
     });
   });

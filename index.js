@@ -18,7 +18,7 @@ module.exports = (label) => {
     }
   };
 
-  const reset = () => {
+  const clear = () => {
     startTime = null;
     endTime = null;
     running = false;
@@ -69,7 +69,7 @@ module.exports = (label) => {
   return {
     start,
     stop,
-    reset,
+    clear,
     isRunning,
     isStopped,
     seconds,
