@@ -74,7 +74,7 @@ console.log(timer.isStopped()); // true
 ```
 
 ### .format(template)
-formats the recorded time using a custom or default template. The function replaces the time fractions placeholders in a string. Place holders are:
+formats the recorded time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
 
 * `%label` for the timer label.
 * `%s` for the seconds.
