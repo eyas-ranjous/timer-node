@@ -32,28 +32,28 @@ timer.stop();
 ```
 
 ### .seconds()
-return the seconds part in the recorded timer
+return the seconds part in the recorded time
 
 ```js
 console.log(timer.seconds()); // 4
 ```
 
 ### .milliseconds()
-return the milliseconds part in the recorded timer
+return the milliseconds part in the recorded time
 
 ```js
 console.log(timer.milliseconds()); // 254
 ```
 
 ### .microseconds()
-return the microseconds part in the recorded timer
+return the microseconds part in the recorded time
 
 ```js
 console.log(timer.microseconds()); // 782
 ```
 
 ### .nanoseconds()
-return the nanoseconds part in the recorded timer
+return the nanoseconds part in the recorded time
 
 ```js
 console.log(timer.nanoseconds()); // 615
