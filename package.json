@@ -1,6 +1,6 @@
 {
   "name": "timer-node",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a simple timer object in nodejs",
   "main": "index.js",
   "scripts": {
