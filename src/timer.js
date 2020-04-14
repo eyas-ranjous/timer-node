@@ -1,3 +1,12 @@
+/**
+ * timer-node
+ * @copyright 2020 Eyas Ranjous <eyas.ranjous@gmail.com>
+ * @license MIT
+ */
+
+/**
+ * @class Timer
+ */
 class Timer {
   constructor(label) {
     this._label = label || '';
@@ -6,6 +15,10 @@ class Timer {
     this._endTime = null;
   }
 
+  /**
+   * @public
+   * starts the timer
+   */
   start() {
     if (this._isRunning) return;
 
@@ -13,6 +26,10 @@ class Timer {
     this._isRunning = true;
   }
 
+  /**
+   * @public
+   * stops the timer
+   */
   stop() {
     if (!this._isRunning) return;
 
@@ -20,40 +37,74 @@ class Timer {
     this._isRunning = false;
   }
 
+  /**
+   * @public
+   * clears the timer
+   */
   clear() {
     this._isRunning = false;
     this._startTime = null;
     this._endTime = null;
   }
 
+  /**
+   * @public
+   * checks if the timer is running
+   * @returns {boolean}
+   */
   isRunning() {
     return this._isRunning;
   }
 
+  /**
+   * @public
+   * calculate the nano-seconds part of the time
+   * @returns {number}
+   */
   nanoseconds() {
     if (this._endTime === null) return null;
 
     return this._endTime[1] % 1000;
   }
 
+  /**
+   * @public
+   * calculate the micro-seconds part of the time
+   * @returns {number}
+   */
   microseconds() {
     if (this._endTime === null) return null;
 
     return Math.floor(this._endTime[1] / 1000) % 1000;
   }
 
+  /**
+   * @public
+   * calculate the milli-seconds part of the time
+   * @returns {number}
+   */
   milliseconds() {
     if (this._endTime === null) return null;
 
     return Math.floor(this._endTime[1] / 1000000);
   }
 
+  /**
+   * @public
+   * calculate the seconds part of the time
+   * @returns {number}
+   */
   seconds() {
     if (this._endTime === null) return null;
 
     return this._endTime[0];
   }
 
+  /**
+   * @public
+   * formats the recorded time using a template
+   * @returns {string}
+   */
   format(template = '%lbl: %s s, %ms ms, %us us, %ns ns') {
     if (this._endTime === null) return null;
 
