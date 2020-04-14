@@ -103,6 +103,7 @@ class Timer {
   /**
    * @public
    * formats the recorded time using a template
+   * @param {string} template
    * @returns {string}
    */
   format(template = '%lbl: %s s, %ms ms, %us us, %ns ns') {
