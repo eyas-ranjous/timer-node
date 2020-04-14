@@ -109,8 +109,8 @@ formats the recorded time using a custom or default template. The function repla
 console.log(timer.format()); // test-timer: 4 s, 254 ms, 782 us, 615 ns
 
 // using a custom template
-const custom = '%lbl: [%s secs %ms ms]';
-console.log(timer.format(custom)); // test-timer: [4 secs 254 ms]
+const custom = '%lbl [%s] s [%ms] ms';
+console.log(timer.format(custom)); // test-timer [4] s [254] ms
 ```
 
 ### .clear()
