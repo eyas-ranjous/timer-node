@@ -1,9 +1,9 @@
 const { expect } = require('chai');
 const { stub } = require('sinon');
-const timerFn = require('./index');
+const Timer = require('../src/timer');
 
-describe('timer-node', () => {
-  const timer = timerFn('test-timer');
+describe('Timer tests', () => {
+  const timer = new Timer('test-timer');
 
   before(() => {
     stub(process, 'hrtime')
@@ -18,12 +18,13 @@ describe('timer-node', () => {
   describe('.start()', () => {
     it('should start the timer', () => {
       timer.start();
+      expect(process.hrtime.callCount).to.equal(1);
       expect(timer.isRunning()).to.equal(true);
     });
 
     it('should not start the timer again if started', () => {
       timer.start();
-      expect(timer.isRunning()).to.equal(true);
+      expect(process.hrtime.callCount).to.equal(1);
     });
   });
 
@@ -31,12 +32,12 @@ describe('timer-node', () => {
     it('should stop the timer', () => {
       timer.stop();
       expect(timer.isRunning()).to.equal(false);
-      expect(timer.isStopped()).to.equal(true);
+      expect(process.hrtime.callCount).to.equal(2);
     });
 
-    it('should do nothing if timer is stopped', () => {
+    it('should do nothing for unfinished timer', () => {
       timer.stop();
-      expect(timer.isRunning()).to.equal(false);
+      expect(process.hrtime.callCount).to.equal(2);
     });
   });
 
@@ -45,9 +46,9 @@ describe('timer-node', () => {
       expect(timer.seconds()).to.equal(19);
     });
 
-    it('should return null if timer is not stopped', () => {
-      const nullTimer = timerFn('test-timer');
-      expect(nullTimer.seconds()).to.equal(null);
+    it('should return null for unfinished timer', () => {
+      const unstartedTimer = new Timer('');
+      expect(unstartedTimer.seconds()).to.equal(null);
     });
   });
 
@@ -56,9 +57,9 @@ describe('timer-node', () => {
       expect(timer.milliseconds()).to.equal(674);
     });
 
-    it('should return null if timer is not stopped', () => {
-      const nullTimer = timerFn('test-timer');
-      expect(nullTimer.milliseconds()).to.equal(null);
+    it('should return null for unfinished timer', () => {
+      const unstartedTimer = new Timer('');
+      expect(unstartedTimer.milliseconds()).to.equal(null);
     });
   });
 
@@ -67,9 +68,9 @@ describe('timer-node', () => {
       expect(timer.microseconds()).to.equal(468);
     });
 
-    it('should return null if timer is not stopped', () => {
-      const nullTimer = timerFn('');
-      expect(nullTimer.microseconds()).to.equal(null);
+    it('should return null for unfinished timer', () => {
+      const unstartedTimer = new Timer('');
+      expect(unstartedTimer.microseconds()).to.equal(null);
     });
   });
 
@@ -78,9 +79,9 @@ describe('timer-node', () => {
       expect(timer.nanoseconds()).to.equal(129);
     });
 
-    it('should return null if timer is not stopped', () => {
-      const nullTimer = timerFn('');
-      expect(nullTimer.nanoseconds()).to.equal(null);
+    it('should return null for unfinished timer', () => {
+      const unstartedTimer = new Timer('');
+      expect(unstartedTimer.nanoseconds()).to.equal(null);
     });
   });
 
@@ -92,13 +93,15 @@ describe('timer-node', () => {
     });
 
     it('should format time with the custom template', () => {
-      expect(timer.format('%label [%s sec - %ms ms - %us micros - %ns nanos ]'))
-        .to.equal('test-timer [19 sec - 674 ms - 468 micros - 129 nanos ]');
+      const template = '%lbl -> [%s] sec [%ms] ms [%us] us [%ns] ns';
+      expect(timer.format(template)).to.equal(
+        'test-timer -> [19] sec [674] ms [468] us [129] ns'
+      );
     });
 
-    it('should return null if timer is not stopped', () => {
-      const nullTimer = timerFn('');
-      expect(nullTimer.format()).to.equal(null);
+    it('should return null for unfinished timer', () => {
+      const unstartedTimer = new Timer('');
+      expect(unstartedTimer.format()).to.equal(null);
     });
   });
 
