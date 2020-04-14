@@ -2,19 +2,48 @@
 
 [![build:?](https://travis-ci.org/js-shelf/timer-node.svg?branch=master)](https://travis-ci.org/js-shelf/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A simple timer object that enables recording time and format the result.
+A simple timer that enables recording ellapsed time and format the result.
+
+# Table of Contents
+* [Install](#install)
+* [API](#api)
+  * [require](#require)
+  * [import](#import)
+  * [Construction](#construction)
+  * [.start()](#start)
+  * [.stop()](#stop)
+  * [.isRunning()](#isrunning)
+  * [.seconds()](#seconds)
+  * [.milliseconds()](#milliseconds)
+  * [.microseconds()](#microseconds)
+  * [.nanoseconds()](#nanoseconds)
+  * [.format(template)](#format)
+ * [Build](#build)
+ * [License](#license)
 
 ## Install
+
 ```
 npm install --save timer-node
 ```
 
-## Usage
+## API
 
-### Creation
+### require
+
 ```js
-const timerFn = require('timer-node');
-const timer = timerFn('test-timer');
+const Timer = require('timer-node');
+```
+
+### import
+
+```js
+import Timer from 'timer-node';
+```
+
+### Construction
+```js
+const timer = new Timer('test-timer');
 ```
 
 ### .start()
@@ -66,17 +95,10 @@ checks if the timer is running and hasn't been stopped
 console.log(timer.isRunning()); // false
 ```
 
-### .isStopped()
-checks if the timer has been stopped
-
-```js
-console.log(timer.isStopped()); // true
-```
-
 ### .format(template)
 formats the recorded time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
 
-* `%label` for the timer label.
+* `%lbl` for the timer label.
 * `%s` for the seconds.
 * `%ms` for the milliseconds.
 * `%us` for the microseconds.
@@ -87,7 +109,7 @@ formats the recorded time using a custom or default template. The function repla
 console.log(timer.format()); // test-timer: 4 s, 254 ms, 782 us, 615 ns
 
 // using a custom template
-const custom = '%label: [%s secs %ms ms]';
+const custom = '%lbl: [%s secs %ms ms]';
 console.log(timer.format(custom)); // test-timer: [4 secs 254 ms]
 ```
 
