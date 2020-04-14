@@ -1,6 +1,6 @@
 # timer-node
 
-[![build:?](https://travis-ci.org/js-shelf/timer-node.svg?branch=master)](https://travis-ci.org/js-shelf/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
+[![build:?](https://travis-ci.org/node-work/timer-node.svg?branch=master)](https://travis-ci.org/node-work/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
 A simple timer that enables recording ellapsed time and format the result.
 
@@ -127,4 +127,4 @@ grunt build
 ```
 
 ## License
-The MIT License. Full License is [here](https://github.com/js-shelf/timer-node/blob/master/LICENSE)
+The MIT License. Full License is [here](https://github.com/node-work/timer-node/blob/master/LICENSE)
