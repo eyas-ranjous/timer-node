@@ -60,6 +60,14 @@ stops the timer
 timer.stop();
 ```
 
+
+### .isRunning()
+checks if the timer is running and hasn't been stopped
+
+```js
+console.log(timer.isRunning()); // false
+```
+
 ### .seconds()
 return the seconds part in the recorded time
 
@@ -86,13 +94,6 @@ return the nanoseconds part in the recorded time
 
 ```js
 console.log(timer.nanoseconds()); // 615
-```
-
-### .isRunning()
-checks if the timer is running and hasn't been stopped
-
-```js
-console.log(timer.isRunning()); // false
 ```
 
 ### .format(template)
