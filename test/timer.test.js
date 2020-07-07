@@ -87,14 +87,14 @@ describe('Timer tests', () => {
 
   describe('.format()', () => {
     it('should format time with the default template', () => {
-      expect(timer.format()).to.equal(
+      expect(timer.stop().format()).to.equal(
         'test-timer: 19 s, 674 ms, 468 us, 129 ns'
       );
     });
 
     it('should format time with the custom template', () => {
       const template = '%lbl -> [%s] sec [%ms] ms [%us] us [%ns] ns';
-      expect(timer.format(template)).to.equal(
+      expect(timer.stop().format(template)).to.equal(
         'test-timer -> [19] sec [674] ms [468] us [129] ns'
       );
     });
@@ -109,6 +109,8 @@ describe('Timer tests', () => {
     it('should clear the timer', () => {
       timer.clear();
       expect(timer.seconds()).to.equal(null);
+
+      expect(timer.clear().start().clear().format()).to.equal(null);
     });
   });
 });
