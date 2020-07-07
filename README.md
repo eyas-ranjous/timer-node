@@ -122,6 +122,8 @@ timer.clear();
 console.log(timer.seconds()); // null
 ```
 
+* _Note: `.start()`, `.stop()` & `.clear()` can be chained with the rest of the functions as they return a timer reference._ 
+
 ## Build
 ```
 grunt build
