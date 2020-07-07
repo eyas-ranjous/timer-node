@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- enable chaining from `.start()`, `.stop()` & `.clear()`.   
+
 ## [2.0.0] - 2020-04-14
 ### Changed
 - new release.
