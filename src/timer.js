@@ -4,8 +4,6 @@
  * @license MIT
  */
 
-const DEFAULT_TEMPLATE = '%lbl: %s s, %ms ms, %us us, %ns ns';
-
 /**
  * @class Timer
  */
@@ -117,7 +115,7 @@ class Timer {
    * @param {string} template
    * @returns {string}
    */
-  format(template = DEFAULT_TEMPLATE) {
+  format(template = '%lbl: %s s, %ms ms, %us us, %ns ns') {
     if (this._endTime === null) return null;
 
     return template
