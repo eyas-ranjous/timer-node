@@ -85,7 +85,7 @@ describe('Timer tests', () => {
     });
   });
 
-  describe('.format()', () => {
+  describe('.format([template])', () => {
     it('should format time with the default template', () => {
       expect(timer.stop().format()).to.equal(
         'test-timer: 19 s, 674 ms, 468 us, 129 ns'
@@ -111,6 +111,20 @@ describe('Timer tests', () => {
       expect(timer.seconds()).to.equal(null);
 
       expect(timer.clear().start().clear().format()).to.equal(null);
+    });
+  });
+
+  describe('Timer.benchmark(fn)', () => {
+    it('should creates a benchmark for a function bound', () => {
+      const fn = (a) => {
+        let sum = 0;
+        for (let i = 0; i < 10000000; i += 1) {
+          sum += a * i;
+        }
+        return sum;
+      }
+      const benchmark = Timer.benchmark(fn.bind(fn, 5));
+      expect(benchmark.milliseconds()).to.be.above(0);
     });
   });
 });

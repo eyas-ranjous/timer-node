@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+const DEFAULT_TEMPLATE = '%lbl: %s s, %ms ms, %us us, %ns ns';
+
 /**
  * @class Timer
  */
@@ -16,8 +18,8 @@ class Timer {
   }
 
   /**
+   * Starts the timer
    * @public
-   * starts the timer
    * @return {Timer}
    */
   start() {
@@ -30,8 +32,8 @@ class Timer {
   }
 
   /**
+   * Stops the timer
    * @public
-   * stops the timer
    * @return {Timer}
    */
   stop() {
@@ -44,8 +46,8 @@ class Timer {
   }
 
   /**
+   * Clears the timer
    * @public
-   * clears the timer
    * @return {Timer}
    */
   clear() {
@@ -57,8 +59,8 @@ class Timer {
   }
 
   /**
+   * Checks if the timer is running
    * @public
-   * checks if the timer is running
    * @returns {boolean}
    */
   isRunning() {
@@ -66,8 +68,8 @@ class Timer {
   }
 
   /**
+   * Calculate the nano-seconds part of the time
    * @public
-   * calculate the nano-seconds part of the time
    * @returns {number}
    */
   nanoseconds() {
@@ -77,8 +79,8 @@ class Timer {
   }
 
   /**
+   * Calculate the micro-seconds part of the time
    * @public
-   * calculate the micro-seconds part of the time
    * @returns {number}
    */
   microseconds() {
@@ -88,8 +90,8 @@ class Timer {
   }
 
   /**
+   * Calculate the milli-seconds part of the time
    * @public
-   * calculate the milli-seconds part of the time
    * @returns {number}
    */
   milliseconds() {
@@ -99,8 +101,8 @@ class Timer {
   }
 
   /**
+   * Calculate the seconds part of the time
    * @public
-   * calculate the seconds part of the time
    * @returns {number}
    */
   seconds() {
@@ -110,12 +112,12 @@ class Timer {
   }
 
   /**
+   * Formats the recorded time using a template
    * @public
-   * formats the recorded time using a template
    * @param {string} template
    * @returns {string}
    */
-  format(template = '%lbl: %s s, %ms ms, %us us, %ns ns') {
+  format(template = DEFAULT_TEMPLATE) {
     if (this._endTime === null) return null;
 
     return template
@@ -124,6 +126,15 @@ class Timer {
       .replace('%ms', this.milliseconds())
       .replace('%us', this.microseconds())
       .replace('%ns', this.nanoseconds());
+  }
+
+  static benchmark(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('.benchmark expects a function');
+    }
+    const timer = new Timer(fn.name).start();
+    fn();
+    return timer.stop();
   }
 }
 
