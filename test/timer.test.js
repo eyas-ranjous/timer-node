@@ -122,7 +122,7 @@ describe('Timer tests', () => {
           sum += a * i;
         }
         return sum;
-      }
+      };
       const benchmark = Timer.benchmark(fn.bind(fn, 5));
       expect(benchmark.milliseconds()).to.be.above(0);
     });
