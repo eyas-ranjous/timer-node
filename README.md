@@ -19,7 +19,7 @@ A simple timer that enables recording ellapsed time and format the result.
   * [.nanoseconds()](#nanoseconds)
   * [.format([template])](#format)
   * [.clear()](#clear)
-  * [Timer.benchmark(fn)](#benchmark)
+  * [Timer.benchmark(fn)](#timerbenchmarkfn)
  * [Build](#build)
  * [License](#license)
 
@@ -124,7 +124,7 @@ timer.clear();
 console.log(timer.seconds()); // null
 ```
 
-### Timer.benchmark(fn[, template])
+### Timer.benchmark(fn)
 creates a benchmark timer for a function call.
 
 ```js
