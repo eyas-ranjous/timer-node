@@ -128,6 +128,13 @@ class Timer {
       .replace('%ns', this.nanoseconds());
   }
 
+  /**
+   * Creates a benchmark timer for a function call
+   * @public
+   * @static
+   * @param {function} fn
+   * @returns {Timer}
+   */
   static benchmark(fn) {
     if (typeof fn !== 'function') {
       throw new Error('.benchmark expects a function');
