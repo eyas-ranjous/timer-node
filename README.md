@@ -1,6 +1,6 @@
 # timer-node
 
-[![build:?](https://travis-ci.org/node-work/timer-node.svg?branch=master)](https://travis-ci.org/node-work/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
+[![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
 A simple timer that enables recording ellapsed time and format the result.
 
@@ -17,7 +17,9 @@ A simple timer that enables recording ellapsed time and format the result.
   * [.milliseconds()](#milliseconds)
   * [.microseconds()](#microseconds)
   * [.nanoseconds()](#nanoseconds)
-  * [.format(template)](#format)
+  * [.format([template])](#format)
+  * [.clear()](#clear)
+  * [Timer.benchmark(fn)](#benchmark)
  * [Build](#build)
  * [License](#license)
 
@@ -47,14 +49,14 @@ const timer = new Timer('test-timer');
 ```
 
 ### .start()
-starts the timer
+starts the timer. returns a timer reference.
 
 ```js
 timer.start();
 ```
 
 ### .stop()
-stops the timer
+stops the timer. returns a timer reference.
 
 ```js
 timer.stop();
@@ -115,14 +117,29 @@ console.log(timer.format(custom)); // test-timer [4] s [254] ms
 ```
 
 ### .clear()
-clears the timer values. Can be started again to record new time.
+clears the timer values. Can be started again to record new time. It also returns a timer reference.
 
 ```js
 timer.clear();
 console.log(timer.seconds()); // null
 ```
 
-* _Note: `.start()`, `.stop()` & `.clear()` can be chained with the rest of the functions as they return a timer reference._ 
+### Timer.benchmark(fn[, template])
+creates a benchmark timer for a function call.
+
+```js
+const fn = (a) => {
+  let sum = 0;
+  for (let i = 0; i < 10000000; i += 1) {
+    sum += a * i;
+  }
+  return sum;
+}
+
+const benchmark = Timer.benchmark(fn.bind(fn, 5));
+console.log(benchmark.milliseconds());
+console.log(benchmark.format());
+```
 
 ## Build
 ```
@@ -130,4 +147,4 @@ grunt build
 ```
 
 ## License
-The MIT License. Full License is [here](https://github.com/node-work/timer-node/blob/master/LICENSE)
+The MIT License. Full License is [here](https://github.com/eyas-ranjous/timer-node/blob/master/LICENSE)
