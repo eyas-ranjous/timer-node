@@ -137,8 +137,8 @@ const fn = (a) => {
 }
 
 const benchmark = Timer.benchmark(fn.bind(fn, 5));
-console.log(benchmark.milliseconds());
-console.log(benchmark.format());
+console.log(benchmark.milliseconds()); // 29
+console.log(benchmark.format()); // bound fn: 0 s, 29 ms, 43 us, 882 ns
 ```
 
 ## Build
