@@ -11,12 +11,9 @@ A simple timer that enables recording ellapsed time and format the result.
   * [import](#import)
   * [Construction](#construction)
   * [.start()](#start)
-  * [.stop()](#stop)
   * [.isRunning()](#isrunning)
-  * [.seconds()](#seconds)
-  * [.milliseconds()](#milliseconds)
-  * [.microseconds()](#microseconds)
-  * [.nanoseconds()](#nanoseconds)
+  * [.time()](#time)
+  * [.stop()](#stop)
   * [.format([template])](#format)
   * [.clear()](#clear)
   * [Timer.benchmark(fn)](#timerbenchmarkfn)
@@ -34,13 +31,13 @@ npm install --save timer-node
 ### require
 
 ```js
-const Timer = require('timer-node');
+const { Timer } = require('timer-node');
 ```
 
 ### import
 
 ```js
-import Timer from 'timer-node';
+import { Timer } from 'timer-node';
 ```
 
 ### Construction
@@ -55,57 +52,47 @@ starts the timer. returns a timer reference.
 timer.start();
 ```
 
+### .isRunning()
+checks if the timer is running and hasn't been stopped
+
+```js
+console.log(timer.isRunning()); // true
+```
+
+### .time()
+return the elapsed time as an object of fractions. It can be called while the timer is running and will return the elapsed time . When timer is stopped, it will always returned the final recorded values.
+
+* `s`: seconds
+* `ms`: milliseconds
+* `us`: microseconds
+* `ns`: nanoseconds
+
+```js
+console.log(timer.time()); // { s: 14, ms: 496, us: 303, ns: 508 }
+
+console.log(timer.time()); // { s: 21, ms: 321, us: 487, ns: 783 }
+
+console.log(timer.time()); // { s: 36, ms: 674, us: 616, ns: 145 }
+```
+
 ### .stop()
 stops the timer. returns a timer reference.
 
 ```js
 timer.stop();
-```
 
-
-### .isRunning()
-checks if the timer is running and hasn't been stopped
-
-```js
-console.log(timer.isRunning()); // false
-```
-
-### .seconds()
-return the seconds part in the recorded time
-
-```js
-console.log(timer.seconds()); // 4
-```
-
-### .milliseconds()
-return the milliseconds part in the recorded time
-
-```js
-console.log(timer.milliseconds()); // 254
-```
-
-### .microseconds()
-return the microseconds part in the recorded time
-
-```js
-console.log(timer.microseconds()); // 782
-```
-
-### .nanoseconds()
-return the nanoseconds part in the recorded time
-
-```js
-console.log(timer.nanoseconds()); // 615
+console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
+console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
 ```
 
 ### .format(template)
-formats the recorded time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
+formats the elapsed time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
 
-* `%lbl` for the timer label.
-* `%s` for the seconds.
-* `%ms` for the milliseconds.
-* `%us` for the microseconds.
-* `%ns` for the nanoseconds.
+* `%lbl` for timer label.
+* `%s` for seconds.
+* `%ms` for milliseconds.
+* `%us` for microseconds.
+* `%ns` for nanoseconds.
 
 ```js
 // using the default template
@@ -121,7 +108,7 @@ clears the timer values. Can be started again to record new time. It also return
 
 ```js
 timer.clear();
-console.log(timer.seconds()); // null
+console.log(timer.time()); // null
 ```
 
 ### Timer.benchmark(fn)

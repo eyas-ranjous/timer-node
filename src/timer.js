@@ -24,6 +24,7 @@ class Timer {
     if (this._isRunning) return this;
 
     this._startTime = process.hrtime();
+    this._endTime = null;
     this._isRunning = true;
 
     return this;
@@ -66,47 +67,23 @@ class Timer {
   }
 
   /**
-   * Calculate the nano-seconds part of the time
+   * Calculate the time parts of the timer
    * @public
-   * @returns {number}
+   * @returns {object}
    */
-  nanoseconds() {
-    if (this._endTime === null) return null;
+  time() {
+    if (this._startTime === null) return null;
 
-    return this._endTime[1] % 1000;
-  }
+    const endTime = this._isRunning
+      ? process.hrtime(this._startTime)
+      : this._endTime;
 
-  /**
-   * Calculate the micro-seconds part of the time
-   * @public
-   * @returns {number}
-   */
-  microseconds() {
-    if (this._endTime === null) return null;
-
-    return Math.floor(this._endTime[1] / 1000) % 1000;
-  }
-
-  /**
-   * Calculate the milli-seconds part of the time
-   * @public
-   * @returns {number}
-   */
-  milliseconds() {
-    if (this._endTime === null) return null;
-
-    return Math.floor(this._endTime[1] / 1000000);
-  }
-
-  /**
-   * Calculate the seconds part of the time
-   * @public
-   * @returns {number}
-   */
-  seconds() {
-    if (this._endTime === null) return null;
-
-    return this._endTime[0];
+    return {
+      s: endTime[0],
+      ms: Math.floor(endTime[1] / 1000000),
+      us: Math.floor(endTime[1] / 1000) % 1000,
+      ns: endTime[1] % 1000
+    };
   }
 
   /**
@@ -116,14 +93,15 @@ class Timer {
    * @returns {string}
    */
   format(template = '%lbl: %s s, %ms ms, %us us, %ns ns') {
-    if (this._endTime === null) return null;
+    if (this._startTime === null) return null;
 
+    const time = this.time();
     return template
       .replace('%lbl', this._label)
-      .replace('%s', this.seconds())
-      .replace('%ms', this.milliseconds())
-      .replace('%us', this.microseconds())
-      .replace('%ns', this.nanoseconds());
+      .replace('%s', time.s)
+      .replace('%ms', time.ms)
+      .replace('%us', time.us)
+      .replace('%ns', time.ns);
   }
 
   /**

@@ -28,60 +28,32 @@ describe('Timer tests', () => {
     });
   });
 
+  describe('.time()', () => {
+    it('get time fractions from the running timer', () => {
+      expect(timer.time()).to.deep.equal({
+        s: 19,
+        ms: 674,
+        us: 468,
+        ns: 129
+      });
+    });
+
+    it('returns null for none started timer', () => {
+      const timer2 = new Timer();
+      expect(timer2.time()).to.equal(null);
+    });
+  });
+
   describe('.stop()', () => {
     it('should stop the timer', () => {
       timer.stop();
       expect(timer.isRunning()).to.equal(false);
-      expect(process.hrtime.callCount).to.equal(2);
+      expect(process.hrtime.callCount).to.equal(3);
     });
 
     it('should do nothing for unfinished timer', () => {
       timer.stop();
-      expect(process.hrtime.callCount).to.equal(2);
-    });
-  });
-
-  describe('.seconds()', () => {
-    it('should get the seconds part of time', () => {
-      expect(timer.seconds()).to.equal(19);
-    });
-
-    it('should return null for unfinished timer', () => {
-      const unstartedTimer = new Timer('');
-      expect(unstartedTimer.seconds()).to.equal(null);
-    });
-  });
-
-  describe('.milliseconds()', () => {
-    it('should get the milliseconds part of time', () => {
-      expect(timer.milliseconds()).to.equal(674);
-    });
-
-    it('should return null for unfinished timer', () => {
-      const unstartedTimer = new Timer('');
-      expect(unstartedTimer.milliseconds()).to.equal(null);
-    });
-  });
-
-  describe('.microseconds()', () => {
-    it('should get the microseconds part of time', () => {
-      expect(timer.microseconds()).to.equal(468);
-    });
-
-    it('should return null for unfinished timer', () => {
-      const unstartedTimer = new Timer('');
-      expect(unstartedTimer.microseconds()).to.equal(null);
-    });
-  });
-
-  describe('.nanoseconds()', () => {
-    it('should get the nanoseconds part of time', () => {
-      expect(timer.nanoseconds()).to.equal(129);
-    });
-
-    it('should return null for unfinished timer', () => {
-      const unstartedTimer = new Timer('');
-      expect(unstartedTimer.nanoseconds()).to.equal(null);
+      expect(process.hrtime.callCount).to.equal(3);
     });
   });
 
@@ -108,7 +80,7 @@ describe('Timer tests', () => {
   describe('.clear()', () => {
     it('should clear the timer', () => {
       timer.clear();
-      expect(timer.seconds()).to.equal(null);
+      expect(timer.time()).to.equal(null);
 
       expect(timer.clear().start().clear().format()).to.equal(null);
     });
@@ -124,7 +96,7 @@ describe('Timer tests', () => {
         return sum;
       };
       const benchmark = Timer.benchmark(fn.bind(fn, 5));
-      expect(benchmark.milliseconds()).to.be.above(0);
+      expect(benchmark.time().ms).to.be.above(0);
     });
   });
 });

@@ -1,3 +1,3 @@
 const Timer = require('./src/timer');
 
-module.exports = Timer;
+exports.Timer = Timer;
