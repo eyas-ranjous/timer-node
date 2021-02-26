@@ -2,7 +2,7 @@
 
 [![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A simple timer that enables recording ellapsed time and format the result.
+A simple timer with pause/resume capability that enables recording elapsed time and format the result.
 
 # Table of Contents
 * [Install](#install)
@@ -11,13 +11,14 @@ A simple timer that enables recording ellapsed time and format the result.
   * [import](#import)
   * [Construction](#construction)
   * [.start()](#start)
+  * [.isStarted()](#isstarted)
+  * [.pause()](#pause)
+  * [.isPaused()](#ispaused)
+  * [.resume()](#resume)
+  * [.time()](#time)
   * [.stop()](#stop)
-  * [.isRunning()](#isrunning)
-  * [.seconds()](#seconds)
-  * [.milliseconds()](#milliseconds)
-  * [.microseconds()](#microseconds)
-  * [.nanoseconds()](#nanoseconds)
-  * [.format([template])](#format)
+  * [.isStopped()](#isstopped)
+  * [.format([template])](#formattemplate)
   * [.clear()](#clear)
   * [Timer.benchmark(fn)](#timerbenchmarkfn)
  * [Build](#build)
@@ -34,13 +35,13 @@ npm install --save timer-node
 ### require
 
 ```js
-const Timer = require('timer-node');
+const { Timer } = require('timer-node');
 ```
 
 ### import
 
 ```js
-import Timer from 'timer-node';
+import { Timer } from 'timer-node';
 ```
 
 ### Construction
@@ -49,63 +50,81 @@ const timer = new Timer('test-timer');
 ```
 
 ### .start()
-starts the timer. returns a timer reference.
+starts the timer. can be chained.
 
 ```js
 timer.start();
 ```
 
+### .isStarted()
+returns true if the timer is started, false if timer is not started or it's been stopped.
+
+```js
+console.log(timer.isStarted()); // true
+```
+
+### .pause()
+pause the timer and memoize the elapsed time. can be chained.
+
+```js
+timer.pause();
+```
+
+### .isPaused()
+returns true if the timer is paused, false if timer is not started or it's been resumed after a pause.
+
+```js
+console.log(timer.isPaused()); // true
+```
+
+### .resume()
+resume the timer by creating a new starting time. can be chained.
+
+```js
+timer.resume();
+```
+
+### .time()
+return the elapsed time as an object. It can be called while the timer is running or when it is paused or stopped and will return the current recorded time plus the memoized pause times.
+
+* `s`: seconds
+* `ms`: milliseconds
+* `us`: microseconds
+* `ns`: nanoseconds
+
+```js
+console.log(timer.time()); // { s: 14, ms: 496, us: 303, ns: 508 }
+
+console.log(timer.time()); // { s: 21, ms: 321, us: 487, ns: 783 }
+
+console.log(timer.time()); // { s: 36, ms: 674, us: 616, ns: 145 }
+```
+
 ### .stop()
-stops the timer. returns a timer reference.
+stops the timer. can be chained. The timer can be started again by calling `.start()` which clears recorded values. 
 
 ```js
 timer.stop();
+
+console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
+console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
 ```
 
-
-### .isRunning()
-checks if the timer is running and hasn't been stopped
+### .isStopped()
+returns true if the timer is stopped, false otherwise.
 
 ```js
-console.log(timer.isRunning()); // false
+console.log(timer.isStopped()); // true
 ```
 
-### .seconds()
-return the seconds part in the recorded time
+### .format([template])
+formats the elapsed time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
 
-```js
-console.log(timer.seconds()); // 4
-```
-
-### .milliseconds()
-return the milliseconds part in the recorded time
-
-```js
-console.log(timer.milliseconds()); // 254
-```
-
-### .microseconds()
-return the microseconds part in the recorded time
-
-```js
-console.log(timer.microseconds()); // 782
-```
-
-### .nanoseconds()
-return the nanoseconds part in the recorded time
-
-```js
-console.log(timer.nanoseconds()); // 615
-```
-
-### .format(template)
-formats the recorded time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
-
-* `%lbl` for the timer label.
-* `%s` for the seconds.
-* `%ms` for the milliseconds.
-* `%us` for the microseconds.
-* `%ns` for the nanoseconds.
+* `%lbl` for timer label.
+* `%s` for seconds.
+* `%ms` for milliseconds.
+* `%us` for microseconds.
+* `%ns` for nanoseconds.
 
 ```js
 // using the default template
@@ -117,11 +136,11 @@ console.log(timer.format(custom)); // test-timer [4] s [254] ms
 ```
 
 ### .clear()
-clears the timer values. Can be started again to record new time. It also returns a timer reference.
+clears the timer values. can be started again by calling `.start()`.
 
 ```js
 timer.clear();
-console.log(timer.seconds()); // null
+console.log(timer.time()); // null
 ```
 
 ### Timer.benchmark(fn)
