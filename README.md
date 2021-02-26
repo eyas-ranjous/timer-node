@@ -50,7 +50,7 @@ const timer = new Timer('test-timer');
 ```
 
 ### .start()
-starts the timer. returns a timer reference.
+starts the timer. can be chained.
 
 ```js
 timer.start();
@@ -64,7 +64,7 @@ console.log(timer.isStarted()); // true
 ```
 
 ### .pause()
-Pause the timer and memoize the elapsed time. returns a timer reference.
+Pause the timer and memoize the elapsed time. can be chained.
 
 ```js
 timer.pause();
@@ -78,7 +78,7 @@ console.log(timer.isPaused()); // true
 ```
 
 ### .resume()
-Resume the timer. It creates a new starting point for the timer. returns a timer reference.
+Resume the timer. It creates a new starting point for the timer. can be chained.
 
 ```js
 timer.resume();
@@ -101,7 +101,7 @@ console.log(timer.time()); // { s: 36, ms: 674, us: 616, ns: 145 }
 ```
 
 ### .stop()
-stops the timer. returns a timer reference. The timer can be started again by calling `.start()` which clears recorded values.
+Stops the timer. Can be chained. The timer can be started again by calling `.start()` which clears recorded values. 
 
 ```js
 timer.stop();
