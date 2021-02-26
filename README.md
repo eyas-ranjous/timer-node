@@ -18,7 +18,7 @@ A simple timer with pause/resume capability that enables recording elapsed time 
   * [.time()](#time)
   * [.stop()](#stop)
   * [.isStopped()](#isstopped)
-  * [.format([template])](#format)
+  * [.format([template])](#formattemplate)
   * [.clear()](#clear)
   * [Timer.benchmark(fn)](#timerbenchmarkfn)
  * [Build](#build)
