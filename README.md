@@ -64,7 +64,7 @@ console.log(timer.isStarted()); // true
 ```
 
 ### .pause()
-Pause the timer and memoize the elapsed time.
+Pause the timer and memoize the elapsed time. returns a timer reference.
 
 ```js
 timer.pause();
@@ -77,8 +77,15 @@ returns true if the timer is paused. False if timer is not started or it's been 
 console.log(timer.isPaused()); // true
 ```
 
+### .resume()
+Resume the timer. It creates a new starting point for the timer. returns a timer reference.
+
+```js
+timer.resume();
+```
+
 ### .time()
-return the elapsed time as an object. It can be called while the timer is running or when it is paused or stopped.
+return the elapsed time as an object. It can be called while the timer is running or when it is paused or stopped and will return the current recorded time plus the memoized pause times.
 
 * `s`: seconds
 * `ms`: milliseconds
