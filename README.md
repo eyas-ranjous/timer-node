@@ -101,7 +101,7 @@ console.log(timer.time()); // { s: 36, ms: 674, us: 616, ns: 145 }
 ```
 
 ### .stop()
-Stops the timer. Can be chained. The timer can be started again by calling `.start()` which clears recorded values. 
+stops the timer. can be chained. The timer can be started again by calling `.start()` which clears recorded values. 
 
 ```js
 timer.stop();
@@ -111,7 +111,7 @@ console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
 ```
 
 ### .isStopped()
-returns true if the timer is stopped. False otherwise.
+returns true if the timer is stopped, false otherwise.
 
 ```js
 console.log(timer.isStopped()); // true
@@ -136,7 +136,7 @@ console.log(timer.format(custom)); // test-timer [4] s [254] ms
 ```
 
 ### .clear()
-clears the timer values. Can be started again to record new time. It also returns a timer reference.
+clears the timer values. can be started again by calling `.start()`.
 
 ```js
 timer.clear();
