@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [4.0.0] - 2021-02-26
+
+### Changed
+- replace time funtions with a single `.time()` function.
+
+### Added
+`.time()` returns elapsed time as an object of time fractions.
+`.pause()` to pause the timer.
+`.resume()` to resume the timer.
+`.isStarted()` check if timer is started.
+`.isPaused()` check if timer is paused.
+`.isStopped()` check if timer is stopped.
 
 ## [3.1.0] - 2021-02-06
 ### Added
