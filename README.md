@@ -2,7 +2,7 @@
 
 [![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A simple timer that enables recording ellapsed time and format the result.
+A simple timer with pause/resume capability that enables recording elapsed time and format the result.
 
 # Table of Contents
 * [Install](#install)
@@ -11,9 +11,13 @@ A simple timer that enables recording ellapsed time and format the result.
   * [import](#import)
   * [Construction](#construction)
   * [.start()](#start)
-  * [.isRunning()](#isrunning)
-  * [.time()](#time)
+  * [.isStarted()](#isstarted)
+  * [.pause()](#pause)
+  * [.isPaused()](#pause)
+  * [.resume()](#resume)
   * [.stop()](#stop)
+  * [.isStopped()](#stop)
+  * [.time()](#time)
   * [.format([template])](#format)
   * [.clear()](#clear)
   * [Timer.benchmark(fn)](#timerbenchmarkfn)
@@ -52,11 +56,25 @@ starts the timer. returns a timer reference.
 timer.start();
 ```
 
-### .isRunning()
-checks if the timer is running and hasn't been stopped
+### .isStarted()
+returns true if the timer is started. False if timer is not started or stopped.
 
 ```js
-console.log(timer.isRunning()); // true
+console.log(timer.isStarted()); // true
+```
+
+### .pause()
+Pause the timer and memoize the elapsed time.
+
+```js
+timer.pause();
+```
+
+### .isPaused()
+returns true if the timer is paused. False if timer is not started or resumed after a pause.
+
+```js
+console.log(timer.isPaused()); // true
 ```
 
 ### .time()
