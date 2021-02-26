@@ -57,28 +57,28 @@ timer.start();
 ```
 
 ### .isStarted()
-returns true if the timer is started. False if timer is not started or it's been stopped.
+returns true if the timer is started, false if timer is not started or it's been stopped.
 
 ```js
 console.log(timer.isStarted()); // true
 ```
 
 ### .pause()
-Pause the timer and memoize the elapsed time. can be chained.
+pause the timer and memoize the elapsed time. can be chained.
 
 ```js
 timer.pause();
 ```
 
 ### .isPaused()
-returns true if the timer is paused. False if timer is not started or it's been resumed after a pause.
+returns true if the timer is paused, false if timer is not started or it's been resumed after a pause.
 
 ```js
 console.log(timer.isPaused()); // true
 ```
 
 ### .resume()
-Resume the timer. It creates a new starting point for the timer. can be chained.
+resume the timer by creating a new starting time. can be chained.
 
 ```js
 timer.resume();
