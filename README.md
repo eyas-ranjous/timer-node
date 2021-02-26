@@ -57,7 +57,7 @@ timer.start();
 ```
 
 ### .isStarted()
-returns true if the timer is started. False if timer is not started or stopped.
+returns true if the timer is started. False if timer is not started or it's been stopped.
 
 ```js
 console.log(timer.isStarted()); // true
@@ -71,14 +71,14 @@ timer.pause();
 ```
 
 ### .isPaused()
-returns true if the timer is paused. False if timer is not started or resumed after a pause.
+returns true if the timer is paused. False if timer is not started or it's been resumed after a pause.
 
 ```js
 console.log(timer.isPaused()); // true
 ```
 
 ### .time()
-return the elapsed time as an object of fractions. It can be called while the timer is running and will return the elapsed time . When timer is stopped, it will always returned the final recorded values.
+return the elapsed time as an object. It can be called while the timer is running or when it is paused or stopped.
 
 * `s`: seconds
 * `ms`: milliseconds
@@ -101,6 +101,13 @@ timer.stop();
 
 console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
 console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
+```
+
+### .isStopped()
+returns true if the timer is stopped. False otherwise.
+
+```js
+console.log(timer.isStopped()); // true
 ```
 
 ### .format(template)
