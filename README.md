@@ -101,7 +101,7 @@ console.log(timer.time()); // { s: 36, ms: 674, us: 616, ns: 145 }
 ```
 
 ### .stop()
-stops the timer. returns a timer reference.
+stops the timer. returns a timer reference. The timer can be started again by calling `.start()` which clears recorded values.
 
 ```js
 timer.stop();
