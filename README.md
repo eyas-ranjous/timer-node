@@ -117,7 +117,7 @@ returns true if the timer is stopped, false otherwise.
 console.log(timer.isStopped()); // true
 ```
 
-### .format(template)
+### .format([template])
 formats the elapsed time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
 
 * `%lbl` for timer label.
