@@ -46,6 +46,8 @@ const { Timer } = require('timer-node');
 const { Timer, Time } = require('timer-node');
 ```
 
+### import
+
 #### JS
 
 ```js
@@ -57,8 +59,6 @@ import { Timer } from 'timer-node';
 ```js
 import { Timer, Time } from 'timer-node';
 ```
-
-### import
 
 ### Construction
 ```js
