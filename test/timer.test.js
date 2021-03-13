@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const { stub } = require('sinon');
-const Timer = require('../src/timer');
+const { Timer } = require('../src/timer');
 
 describe('Timer tests', () => {
   const timer = new Timer('test-timer');
