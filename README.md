@@ -34,15 +34,31 @@ npm install --save timer-node
 
 ### require
 
+#### JS
+
 ```js
 const { Timer } = require('timer-node');
 ```
 
-### import
+#### TS
+
+```js
+const { Timer, Time } = require('timer-node');
+```
+
+#### JS
 
 ```js
 import { Timer } from 'timer-node';
 ```
+
+#### TS
+
+```js
+import { Timer, Time } from 'timer-node';
+```
+
+### import
 
 ### Construction
 ```js
@@ -156,8 +172,8 @@ const fn = (a) => {
 }
 
 const benchmark = Timer.benchmark(fn.bind(fn, 5));
-console.log(benchmark.milliseconds()); // 29
-console.log(benchmark.format()); // bound fn: 0 s, 29 ms, 43 us, 882 ns
+console.log(benchmark.time()); // { s: 0, ms: 53, us: 193, ns: 368 }
+console.log(benchmark.format()); // bound fn: 0 s, 53 ms, 193 us, 368 ns
 ```
 
 ## Build
