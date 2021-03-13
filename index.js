@@ -1,3 +1,3 @@
-const Timer = require('./src/timer');
+const { Timer } = require('./src/timer');
 
 exports.Timer = Timer;
