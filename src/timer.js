@@ -227,4 +227,4 @@ class Timer {
   }
 }
 
-module.exports = Timer;
+exports.Timer = Timer;
