@@ -11,6 +11,7 @@ class Timer {
   /**
    * Creates a new timer
    * @param {object} [options]
+   * @return {Timer}
    */
   constructor(options = {}) {
     const timestamp = (options.timestamp > 0 && options.timestamp < Date.now())
@@ -22,18 +23,7 @@ class Timer {
     this._currentStartTimestamp = timestamp;
     this._endTimestamp = null;
     this._pauseCount = 0;
-    this._pauseMs = 0;
-  }
-
-  /**
-   * Get the ellapsed time in milliseconds of a started timer
-   * @private
-   * @return {object}
-   */
-  _getEllapsedTimeMs() {
-    const endTimestamp = this.isStopped() ? this._endTimestamp : Date.now();
-    const currentMs = endTimestamp - this._currentStartTimestamp;
-    return currentMs + this._pauseMs;
+    this._accumulatedMs = 0;
   }
 
   /**
@@ -49,7 +39,7 @@ class Timer {
    * @return {boolean}
    */
   isPaused() {
-    return this.isStarted() && this._currentStartTimestamp === null;
+    return this.isStarted() && !this._currentStartTimestamp;
   }
 
   /**
@@ -74,7 +64,7 @@ class Timer {
    * @return {Timer}
    */
   start() {
-    if (this.isStarted()) {
+    if (this.isStarted() && !this.isStopped()) {
       return this;
     }
 
@@ -90,18 +80,18 @@ class Timer {
    * @return {Timer}
    */
   pause() {
-    if (!this.isStarted()) {
+    if (this.isPaused() || !this.isStarted() || this.isStopped()) {
       return this;
     }
 
-    this._pauseMs = this._getEllapsedTimeMs();
     this._pauseCount += 1;
+    this._accumulatedMs += Date.now() - this._currentStartTimestamp;
     this._currentStartTimestamp = null;
     return this;
   }
 
   /**
-   * Resume the timer
+   * Resume the paused timer
    * @public
    * @return {Timer}
    */
@@ -115,7 +105,7 @@ class Timer {
   }
 
   /**
-   * Stop the timer
+   * Stop the started timer
    * @public
    * @return {Timer}
    */
@@ -124,28 +114,27 @@ class Timer {
       return this;
     }
 
-    if (!this.isPaused()) {
-      this._endTimestamp = Date.now();
-    }
-
+    this._endTimestamp = Date.now();
     return this;
   }
 
   /**
-   * Returns the ellapsed time in milliseconds
+   * Returns the elapsed running time in milliseconds
    * @public
    * @return {number}
    */
   ms() {
-    if (!this.isStarted() && !this.isStopped()) {
+    if (!this.isStarted()) {
       return 0;
     }
 
     if (this.isPaused()) {
-      return this._pauseMs;
+      return this._accumulatedMs;
     }
 
-    return this._getEllapsedTimeMs();
+    const endTimestamp = this._endTimestamp || Date.now();
+    const currentMs = endTimestamp - this._currentStartTimestamp;
+    return currentMs + this._accumulatedMs;
   }
 
   /**
@@ -154,7 +143,12 @@ class Timer {
    * @return {number}
    */
   pauseMs() {
-    return this._pauseMs;
+    if (!this.isStarted()) {
+      return 0;
+    }
+
+    const endTimestamp = this._endTimestamp || Date.now();
+    return (endTimestamp - this._startTimestamp) - this.ms();
   }
 
   /**
@@ -177,7 +171,7 @@ class Timer {
   }
 
   /**
-   * Returns the ellapsed time as an object of time fractions
+   * Returns the elapsed time as an object of time fractions
    * @public
    * @returns {object}
    */
@@ -186,16 +180,16 @@ class Timer {
   }
 
   /**
-   * Returns the pauses time as an object of time fractions
+   * Returns the paused time as an object of time fractions
    * @public
    * @returns {object}
    */
   pauseTime() {
-    return this._getTime(this._pauseMs);
+    return this._getTime(this.pauseMs());
   }
 
   /**
-   * Returns the number of times the timer was paused
+   * Returns the number of pauses
    * @public
    * @returns {number}
    */
@@ -204,7 +198,7 @@ class Timer {
   }
 
   /**
-   * Returns the timestamp of timer's start
+   * Returns the start timestamp
    * @public
    * @returns {number}
    */
@@ -213,7 +207,7 @@ class Timer {
   }
 
   /**
-   * Returns the timestamp of timer's end
+   * Returns the stop timestamp
    * @public
    * @returns {number}
    */
@@ -247,7 +241,7 @@ class Timer {
     this._startTimestamp = null;
     this._currentStartTimestamp = null;
     this._endTimestamp = null;
-    this._pauseMs = 0;
+    this._accumulatedMs = 0;
     this._pauseCount = 0;
     return this;
   }
