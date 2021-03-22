@@ -236,7 +236,6 @@ describe('Timer tests', () => {
         label: 'past-timer',
         timestamp: pastTimestamp
       });
-      console.log(pastTimer.time());
       expect(pastTimer.startedAt()).to.equal(pastTimestamp);
       expect(pastTimer.time().d).to.be.above(1150);
       expect(pastTimer.time().h).to.be.below(24);
