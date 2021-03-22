@@ -10,59 +10,30 @@
 class Timer {
   /**
    * Creates a new timer
-   * @param {string} label
+   * @param {object} [options]
    */
-  constructor(label) {
-    this._label = label || '';
-    this._isStarted = false;
-    this._isStopped = false;
-    this._isPaused = false;
-    this._startTime = null;
-    this._endTime = null;
-    this._pausedTime = null;
+  constructor(options = {}) {
+    const timestamp = (options.timestamp > 0 && options.timestamp < Date.now())
+      ? options.timestamp
+      : null;
+
+    this._label = options.label || '';
+    this._startTimestamp = timestamp;
+    this._currentStartTimestamp = timestamp;
+    this._endTimestamp = null;
+    this._pauseCount = 0;
+    this._pauseMs = 0;
   }
 
   /**
-   * Adds two recorded times
+   * Get the ellapsed time in milliseconds of a started timer
    * @private
    * @return {object}
    */
-  _sum(time1, time2) {
-    const nsSum = time1.ns + time2.ns;
-    const usSum = time1.us + time2.us + Math.floor(nsSum / 1000);
-    const msSum = time1.ms + time2.ms + Math.floor(usSum / 1000);
-    const sSum = time1.s + time2.s + Math.floor(msSum / 1000);
-
-    return {
-      s: sSum,
-      ms: msSum % 1000,
-      us: usSum % 1000,
-      ns: nsSum % 1000
-    };
-  }
-
-  /**
-   * Get the ellapsed time of a started timer
-   * @private
-   * @return {object}
-   */
-  _getTime() {
-    const endTime = this._isStopped
-      ? this._endTime
-      : process.hrtime(this._startTime);
-
-    const currentTime = {
-      s: endTime[0],
-      ms: Math.floor(endTime[1] / 1000000),
-      us: Math.floor(endTime[1] / 1000) % 1000,
-      ns: endTime[1] % 1000
-    };
-
-    if (this._pausedTime === null) {
-      return currentTime;
-    }
-
-    return this._sum(this._pausedTime, currentTime);
+  _getEllapsedTimeMs() {
+    const endTimestamp = this.isStopped() ? this._endTimestamp : Date.now();
+    const currentMs = endTimestamp - this._currentStartTimestamp;
+    return currentMs + this._pauseMs;
   }
 
   /**
@@ -70,7 +41,7 @@ class Timer {
    * @return {boolean}
    */
   isStarted() {
-    return this._isStarted;
+    return !!this._startTimestamp;
   }
 
   /**
@@ -78,7 +49,7 @@ class Timer {
    * @return {boolean}
    */
   isPaused() {
-    return this._isPaused;
+    return this.isStarted() && this._currentStartTimestamp === null;
   }
 
   /**
@@ -86,7 +57,15 @@ class Timer {
    * @return {boolean}
    */
   isStopped() {
-    return this._isStopped;
+    return !!this._endTimestamp;
+  }
+
+  /**
+   * @public
+   * @return {boolean}
+   */
+  isRunning() {
+    return this.isStarted() && !this.isStopped();
   }
 
   /**
@@ -95,13 +74,13 @@ class Timer {
    * @return {Timer}
    */
   start() {
-    if (this._isStarted) {
+    if (this.isStarted()) {
       return this;
     }
 
     this.clear();
-    this._startTime = process.hrtime();
-    this._isStarted = true;
+    this._startTimestamp = Date.now();
+    this._currentStartTimestamp = this._startTimestamp;
     return this;
   }
 
@@ -111,13 +90,13 @@ class Timer {
    * @return {Timer}
    */
   pause() {
-    if (!this._isStarted) {
+    if (!this.isStarted()) {
       return this;
     }
 
-    this._pausedTime = this._getTime();
-    this._startTime = null;
-    this._isPaused = true;
+    this._pauseMs = this._getEllapsedTimeMs();
+    this._pauseCount += 1;
+    this._currentStartTimestamp = null;
     return this;
   }
 
@@ -127,12 +106,11 @@ class Timer {
    * @return {Timer}
    */
   resume() {
-    if (!this._isPaused || this._isStopped) {
+    if (!this.isPaused() || this.isStopped()) {
       return this;
     }
 
-    this._startTime = process.hrtime();
-    this._isPaused = false;
+    this._currentStartTimestamp = Date.now();
     return this;
   }
 
@@ -142,35 +120,105 @@ class Timer {
    * @return {Timer}
    */
   stop() {
-    if (!this._isStarted) {
+    if (!this.isStarted()) {
       return this;
     }
 
-    if (!this._isPaused) {
-      this._endTime = process.hrtime(this._startTime);
+    if (!this.isPaused()) {
+      this._endTimestamp = Date.now();
     }
-
-    this._isStarted = false;
-    this._isStopped = true;
 
     return this;
   }
 
   /**
-   * Calculate the ellapsed time of the timer
+   * Returns the ellapsed time in milliseconds
+   * @public
+   * @return {number}
+   */
+  ms() {
+    if (!this.isStarted() && !this.isStopped()) {
+      return 0;
+    }
+
+    if (this.isPaused()) {
+      return this._pauseMs;
+    }
+
+    return this._getEllapsedTimeMs();
+  }
+
+  /**
+   * Returns the total of milliseconds of pauses
+   * @public
+   * @return {number}
+   */
+  pauseMs() {
+    return this._pauseMs;
+  }
+
+  /**
+   * @private
+   * @return {object}
+   */
+  _getTime(ms) {
+    const s = Math.floor(ms / 1000);
+    const m = Math.floor(s / 60);
+    const h = Math.floor(m / 60);
+    const d = Math.floor(h / 24);
+
+    return {
+      d,
+      h: h % 60,
+      m: m % 60,
+      s: s % 60,
+      ms: ms % 1000
+    };
+  }
+
+  /**
+   * Returns the ellapsed time as an object of time fractions
    * @public
    * @returns {object}
    */
   time() {
-    if (!this._isStarted && !this._isStopped) {
-      return null;
-    }
+    return this._getTime(this.ms());
+  }
 
-    if (this._isPaused) {
-      return Object.assign({}, this._pausedTime);
-    }
+  /**
+   * Returns the pauses time as an object of time fractions
+   * @public
+   * @returns {object}
+   */
+  pauseTime() {
+    return this._getTime(this._pauseMs);
+  }
 
-    return this._getTime();
+  /**
+   * Returns the number of times the timer was paused
+   * @public
+   * @returns {number}
+   */
+  pauseCount() {
+    return this._pauseCount;
+  }
+
+  /**
+   * Returns the timestamp of timer's start
+   * @public
+   * @returns {number}
+   */
+  startedAt() {
+    return this._startTimestamp;
+  }
+
+  /**
+   * Returns the timestamp of timer's end
+   * @public
+   * @returns {number}
+   */
+  stoppedAt() {
+    return this._endTimestamp;
   }
 
   /**
@@ -179,18 +227,15 @@ class Timer {
    * @param {string} template
    * @returns {string}
    */
-  format(template = '%lbl: %s s, %ms ms, %us us, %ns ns') {
-    if (!this._isStarted && !this._isStopped) {
-      return null;
-    }
-
+  format(template = '%label%d d, %h h, %m m, %s s, %ms ms') {
     const time = this.time();
     return template
-      .replace('%lbl', this._label)
+      .replace('%label', this._label ? `${this._label}: ` : '')
+      .replace('%d', time.d)
+      .replace('%h', time.h)
+      .replace('%m', time.m)
       .replace('%s', time.s)
-      .replace('%ms', time.ms)
-      .replace('%us', time.us)
-      .replace('%ns', time.ns);
+      .replace('%ms', time.ms);
   }
 
   /**
@@ -199,13 +244,11 @@ class Timer {
    * @return {Timer}
    */
   clear() {
-    this._isStarted = false;
-    this._isStopped = false;
-    this._isPaused = false;
-    this._startTime = null;
-    this._endTime = null;
-    this._pausedTime = null;
-
+    this._startTimestamp = null;
+    this._currentStartTimestamp = null;
+    this._endTimestamp = null;
+    this._pauseMs = 0;
+    this._pauseCount = 0;
     return this;
   }
 
