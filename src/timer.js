@@ -169,7 +169,7 @@ class Timer {
 
     return {
       d,
-      h: h % 60,
+      h: h % 24,
       m: m % 60,
       s: s % 60,
       ms: ms % 1000

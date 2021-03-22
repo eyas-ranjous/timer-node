@@ -236,8 +236,13 @@ describe('Timer tests', () => {
         label: 'past-timer',
         timestamp: pastTimestamp
       });
+      console.log(pastTimer.time());
       expect(pastTimer.startedAt()).to.equal(pastTimestamp);
       expect(pastTimer.time().d).to.be.above(1150);
+      expect(pastTimer.time().h).to.be.below(24);
+      expect(pastTimer.time().m).to.be.below(60);
+      expect(pastTimer.time().s).to.be.below(60);
+      expect(pastTimer.time().ms).to.be.below(1000);
     });
   });
 });
