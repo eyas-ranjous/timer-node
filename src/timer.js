@@ -14,16 +14,37 @@ class Timer {
    * @return {Timer}
    */
   constructor(options = {}) {
-    const timestamp = (options.timestamp > 0 && options.timestamp < Date.now())
-      ? options.timestamp
+    const {
+      label,
+      startTimestamp,
+      endTimestamp,
+      currentStartTimestamp,
+      pauseCount,
+      accumulatedMs
+    } = options;
+
+    const startTs = (startTimestamp > 0 && startTimestamp < Date.now())
+      ? startTimestamp
       : null;
 
-    this._label = options.label || '';
-    this._startTimestamp = timestamp;
-    this._currentStartTimestamp = timestamp;
-    this._endTimestamp = null;
-    this._pauseCount = 0;
-    this._accumulatedMs = 0;
+    const endTs = (endTimestamp > 0 && endTimestamp < Date.now())
+      ? endTimestamp
+      : null;
+
+    this._label = label || '';
+    this._startTimestamp = startTs;
+    this._currentStartTimestamp = currentStartTimestamp || startTs;
+    this._endTimestamp = endTs;
+    this._pauseCount = pauseCount || 0;
+    this._accumulatedMs = accumulatedMs || 0;
+  }
+
+  /**
+   * @public
+   * @return {string}
+   */
+  getLabel() {
+    return this._label;
   }
 
   /**
@@ -244,6 +265,32 @@ class Timer {
     this._accumulatedMs = 0;
     this._pauseCount = 0;
     return this;
+  }
+
+  /**
+   * Serlialize the timer
+   * @public
+   * @return {string}
+   */
+  serialize() {
+    return JSON.stringify({
+      startTimestamp: this._startTimestamp,
+      currentStartTimestamp: this._currentStartTimestamp,
+      endTimestamp: this._endTimestamp,
+      accumulatedMs: this._accumulatedMs,
+      pauseCount: this._pauseCount,
+      label: this._label
+    });
+  }
+
+  /**
+   * Serlialize the timer
+   * @public
+   * @param {string} serializedTime
+   * @return {Timer}
+   */
+  static deserialize(serializedTime) {
+    return new Timer(JSON.parse(serializedTime));
   }
 
   /**

@@ -183,6 +183,18 @@ describe('Timer tests', () => {
     });
   });
 
+  describe('.serialize()', () => {
+    it('serialize the timer', () => {
+      const timerObj = JSON.parse(timer.serialize());
+      expect(timerObj.label).to.equal(timer.getLabel());
+      expect(timerObj.pauseCount).to.equal(1);
+      expect(timerObj.accumulatedMs).to.be.above(0);
+      expect(timerObj.currentStartTimestamp).to.be.above(0);
+      expect(timerObj.endTimestamp).to.be.above(0);
+      expect(timerObj.startTimestamp).to.be.above(0);
+    });
+  });
+
   describe('.clear()', () => {
     it('should clear the timer', () => {
       timer.clear();
@@ -210,6 +222,13 @@ describe('Timer tests', () => {
     });
   });
 
+  describe('Timer.deserialize(serializedTimer)', () => {
+    it('creates a timer from a serialized timer', () => {
+      const newTimer = Timer.deserialize(timer.serialize());
+      expect(newTimer.serialize()).to.deep.equal(timer.serialize());
+    });
+  });
+
   describe('Timer.benchmark(fn)', () => {
     it('throw an error if input is not a function', () => {
       expect(() => Timer.benchmark('test')).to.throw(Error)
@@ -234,8 +253,9 @@ describe('Timer tests', () => {
       const pastTimestamp = 1516363286993; // 2018-01-19 12:01:26.993
       const pastTimer = new Timer({
         label: 'past-timer',
-        timestamp: pastTimestamp
+        startTimestamp: pastTimestamp
       });
+
       expect(pastTimer.startedAt()).to.equal(pastTimestamp);
       expect(pastTimer.time().d).to.be.above(1150);
       expect(pastTimer.time().h).to.be.below(24);
