@@ -32,6 +32,8 @@ export class Timer {
   pauseMs(): number;
   pauseCount(): number;
   format(template?: string): string;
+  serialize(): string;
   clear(): Timer;
+  static deserialize(serializedTimer: string): Timer;
   static benchmark(fn: () => any): Timer;
 }
