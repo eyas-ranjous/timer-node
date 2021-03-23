@@ -268,7 +268,7 @@ class Timer {
   }
 
   /**
-   * Serlialize the timer
+   * Serialize the timer
    * @public
    * @return {string}
    */
@@ -284,7 +284,7 @@ class Timer {
   }
 
   /**
-   * Serlialize the timer
+   * Deserialize the timer
    * @public
    * @param {string} serializedTime
    * @return {Timer}
