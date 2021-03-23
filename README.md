@@ -248,7 +248,7 @@ console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
 ```
 
 ### format
-formats the elapsed time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
+formats the elapsed time using a custom or default template.
 
 <table>
   <tr>
@@ -256,12 +256,13 @@ formats the elapsed time using a custom or default template. The function replac
     <th align="center">return</th>
   </tr>
   <tr>
-    <td align="center">*template*: string</td>
+    <td align="center"><i>template</i>: string</td>
     <td align="center">string</td>
   </tr>
 </table>
 
-Template:
+The function replaces time placeholders in a string. Placeholders are:
+
 * `%label` for timer label.
 * `%ms` for milliseconds.
 * `%s` for seconds.
