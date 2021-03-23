@@ -25,15 +25,20 @@ class Timer {
 
     const startTs = (startTimestamp > 0 && startTimestamp < Date.now())
       ? startTimestamp
-      : null;
+      : undefined;
 
     const endTs = (startTs > 0 && endTimestamp > 0 && endTimestamp > startTs)
       ? endTimestamp
-      : null;
+      : undefined;
+
+    const currentTs = (currentStartTimestamp >= startTs
+      && (!endTs || currentStartTimestamp < endTs))
+      ? currentStartTimestamp
+      : undefined;
 
     this._label = label || '';
     this._startTimestamp = startTs;
-    this._currentStartTimestamp = currentStartTimestamp || startTs;
+    this._currentStartTimestamp = currentTs || startTs;
     this._endTimestamp = endTs;
     this._pauseCount = pauseCount || 0;
     this._accumulatedMs = accumulatedMs || 0;
@@ -107,7 +112,7 @@ class Timer {
 
     this._pauseCount += 1;
     this._accumulatedMs += Date.now() - this._currentStartTimestamp;
-    this._currentStartTimestamp = null;
+    this._currentStartTimestamp = undefined;
     return this;
   }
 
@@ -259,9 +264,9 @@ class Timer {
    * @return {Timer}
    */
   clear() {
-    this._startTimestamp = null;
-    this._currentStartTimestamp = null;
-    this._endTimestamp = null;
+    this._startTimestamp = undefined;
+    this._currentStartTimestamp = undefined;
+    this._endTimestamp = undefined;
     this._accumulatedMs = 0;
     this._pauseCount = 0;
     return this;
