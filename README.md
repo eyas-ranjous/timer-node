@@ -4,7 +4,7 @@
 
 A timestamp-based timer that enables recording elapsed time and formatting the result.
 
-✅&nbsp; It does NOT use setInterval/setTimeout/process<br />
+✅&nbsp; It does **NOT** use setInterval/setTimeout/process<br />
 ✅&nbsp; It works in **javascript** & **typescript**<br />
 ✅&nbsp; It works in **nodejs** & **reactjs**
 
