@@ -8,11 +8,16 @@ export interface Time {
 
 export interface TimerOptions {
   label?: string;
-  timestamp?: number;
+  startTimestamp?: number;
+  currentStartTimestamp?: number;
+  endTimestamp?: number;
+  pauseCount?: number;
+  accumulatedMs?: number;
 }
 
 export class Timer {
   constructor(options?: TimerOptions);
+  getLabel(): string;
   isStarted(): boolean;
   isPaused(): boolean;
   isRunning(): boolean;
