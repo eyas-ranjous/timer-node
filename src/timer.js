@@ -27,7 +27,7 @@ class Timer {
       ? startTimestamp
       : null;
 
-    const endTs = (endTimestamp > 0 && endTimestamp < Date.now())
+    const endTs = (startTs > 0 && endTimestamp > 0 && endTimestamp > startTs)
       ? endTimestamp
       : null;
 
