@@ -4,7 +4,7 @@
 
 A timestamp-based timer that enables recording elapsed time and formatting the result.
 
-\[**Start**\]----ms----\[**Pause**\]--->\[**Resume**\]----ms----\[**Pause**\]--->\[**Resume**\]----ms----\[**Stop**\]
+\[**Start**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Stop**\]
 
 ✅&nbsp; It does **NOT** use setInterval/setTimeout/process<br />
 ✅&nbsp; It works in **Javascript** & **Typescript**<br />
