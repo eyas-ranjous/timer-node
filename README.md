@@ -18,6 +18,7 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
   * [new](#new)
   * [start](#start)
   * [isStarted](#isstarted)
+  * [startedAt](#startedat)
   * [pause](#pause)
   * [isPaused](#ispaused)
   * [resume](#resume)
@@ -28,6 +29,7 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
   * [pauseCount](#pauseMs)
   * [pauseTime](#pauseTime)
   * [stop](#stop)
+  * [stoppedAt](#stoppedat)
   * [isStopped](#isstopped)
   * [serialize](#serialize)
   * [clear](#clear)
@@ -128,6 +130,23 @@ returns true if the timer was started.
 ```js
 console.log(timer.isStarted()); // true
 ```
+
+### startedAt
+returns the starting timestamp.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">number</td>
+  </tr>
+</table>
+
+```js
+console.log(timer.startedAt()); // 1616535899945
+```
+
 
 ### pause
 pauses the timer and memoizes elapsed running time.
@@ -361,6 +380,24 @@ checks if the timer has been stopped.
 
 ```js
 console.log(timer.isStopped()); // true
+```
+
+### stoppedAt
+returns the stop timestamp.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">number</td>
+  </tr>
+</table>
+
+```js
+console.log(timer.stoppedAt()); // undefined
+timer.stop();
+console.log(timer.stoppedAt()); // 1616535948456
 ```
 
 ### serialize
