@@ -327,8 +327,9 @@ console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 6, ms: 328 }
 console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 7, ms: 904 }
 
 // when timer is resumed, pauseMs will return the same previousely accomulated pauses
-console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
-console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
+timer.resume();
+console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
+console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
 ```
 
 ### pauseCount
