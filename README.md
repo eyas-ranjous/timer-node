@@ -67,7 +67,6 @@ import { Timer, Time, TimerOptions } from 'timer-node';
 ```
 
 ### new
-```js
 
 <table>
   <tr>
@@ -78,6 +77,7 @@ import { Timer, Time, TimerOptions } from 'timer-node';
   </tr>
 </table>
 
+```js
 const timer = new Timer({ label: 'test-timer' });
 
 // or from a past timestamp
