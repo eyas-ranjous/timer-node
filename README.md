@@ -4,9 +4,9 @@
 
 A timestamp-based timer that enables recording elapsed time and formatting the result.
 
-* It does NOT use setInterval/setTimeout/process.
-* It works in javascript & typescript.
-* It works in nodejs & reactjs.
+✅ It does NOT use setInterval/setTimeout/process.
+✅ It works in javascript & typescript.
+✅ It works in nodejs & reactjs.
 
 # Table of Contents
 * [Install](#install)
