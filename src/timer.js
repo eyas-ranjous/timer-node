@@ -23,15 +23,15 @@ class Timer {
       accumulatedMs
     } = options;
 
-    const startTs = (startTimestamp > 0 && startTimestamp < Date.now())
+    const startTs = (startTimestamp >= 0 && startTimestamp < Date.now())
       ? startTimestamp
       : undefined;
 
-    const endTs = (startTs > 0 && endTimestamp > 0 && endTimestamp > startTs)
+    const endTs = (startTs >= 0 && endTimestamp > 0 && endTimestamp > startTs)
       ? endTimestamp
       : undefined;
 
-    const currentTs = (currentStartTimestamp > startTs
+    const currentTs = (currentStartTimestamp >= startTs
       && (!endTs || currentStartTimestamp < endTs))
       ? currentStartTimestamp
       : startTs;
@@ -57,7 +57,7 @@ class Timer {
    * @return {boolean}
    */
   isStarted() {
-    return !!this._startTimestamp;
+    return this._startTimestamp >= 0;
   }
 
   /**
@@ -65,7 +65,7 @@ class Timer {
    * @return {boolean}
    */
   isPaused() {
-    return this.isStarted() && !this._currentStartTimestamp;
+    return this.isStarted() && this._currentStartTimestamp === undefined;
   }
 
   /**
@@ -73,7 +73,7 @@ class Timer {
    * @return {boolean}
    */
   isStopped() {
-    return !!this._endTimestamp;
+    return this._endTimestamp > 0;
   }
 
   /**
