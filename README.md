@@ -2,25 +2,31 @@
 
 [![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A simple timer with pause/resume capability that enables recording elapsed time and format the result.
+A timestamp-based timer with pause/resume capability that enables recording elapsed time and formatting the result.
 
 # Table of Contents
 * [Install](#install)
 * [API](#api)
   * [require](#require)
   * [import](#import)
-  * [Construction](#construction)
-  * [.start()](#start)
-  * [.isStarted()](#isstarted)
-  * [.pause()](#pause)
-  * [.isPaused()](#ispaused)
-  * [.resume()](#resume)
-  * [.time()](#time)
-  * [.stop()](#stop)
-  * [.isStopped()](#isstopped)
-  * [.format([template])](#formattemplate)
-  * [.clear()](#clear)
-  * [Timer.benchmark(fn)](#timerbenchmarkfn)
+  * [new](#new)
+  * [.start](#start)
+  * [.isStarted](#isstarted)
+  * [.pause](#pause)
+  * [.isPaused](#ispaused)
+  * [.resume](#resume)
+  * [.ms](#ms)
+  * [.time](#time)
+  * [.format](#formattemplate)
+  * [.pauseMs](#pauseMs)
+  * [.pauseCount](#pauseMs)
+  * [.pauseTime](#pauseTime)
+  * [.stop](#stop)
+  * [.isStopped](#isstopped)
+  * [.serialize](#serialize)
+  * [.clear](#clear)
+  * [Timer.deserialize](#deserialize)
+  * [Timer.benchmark](#timerbenchmarkfn)
  * [Build](#build)
  * [License](#license)
 
@@ -43,7 +49,7 @@ const { Timer } = require('timer-node');
 #### TS
 
 ```js
-const { Timer, Time } = require('timer-node');
+const { Timer, Time, TimerOptions } = require('timer-node');
 ```
 
 ### import
@@ -57,67 +63,155 @@ import { Timer } from 'timer-node';
 #### TS
 
 ```js
-import { Timer, Time } from 'timer-node';
+import { Timer, Time, TimerOptions } from 'timer-node';
 ```
 
-### Construction
+### new
 ```js
-const timer = new Timer('test-timer');
+
+<table>
+  <tr>
+    <th align="center">params</th>
+  </tr>
+  <tr>
+    <td align="center">options: object (TimerOptions)</td>
+  </tr>
+</table>
+
+const timer = new Timer({ label: 'test-timer' });
+
+// or from a past timestamp
+const timer = new Timer({
+  label: 'test-timer',
+  startTimestamp: 1563074001233 // 2019-07-14 03:13:21.233Z
+});
 ```
 
-### .start()
-starts the timer. can be chained.
+### .start
+starts the timer.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">Timer</td>
+  </tr>
+</table>
 
 ```js
 timer.start();
 ```
 
-### .isStarted()
-returns true if the timer is started, false if timer is not started or it's been stopped.
+### .isStarted
+returns true if the timer was started.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">boolean</td>
+  </tr>
+</table>
+
 
 ```js
 console.log(timer.isStarted()); // true
 ```
 
-### .pause()
-pause the timer and memoize the elapsed time. can be chained.
+### .pause
+pauses the timer and memoizes elapsed running time.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">Timer</td>
+  </tr>
+</table>
 
 ```js
 timer.pause();
 ```
 
-### .isPaused()
+### .isPaused
 returns true if the timer is paused, false if timer is not started or it's been resumed after a pause.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">Timer</td>
+  </tr>
+</table>
 
 ```js
 console.log(timer.isPaused()); // true
 ```
 
 ### .resume()
-resume the timer by creating a new starting time. can be chained.
+resumes the timer by creating a new starting timestamp.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">Timer</td>
+  </tr>
+</table>
 
 ```js
 timer.resume();
 ```
 
-### .time()
-return the elapsed time as an object. It can be called while the timer is running or when it is paused or stopped and will return the current recorded time plus the memoized pause times.
+### ms
+returns the total milliseconds of elapsed time while timer is running or when stopped.
 
-* `s`: seconds
-* `ms`: milliseconds
-* `us`: microseconds
-* `ns`: nanoseconds
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">number</td>
+  </tr>
+</table>
 
 ```js
-console.log(timer.time()); // { s: 14, ms: 496, us: 303, ns: 508 }
-
-console.log(timer.time()); // { s: 21, ms: 321, us: 487, ns: 783 }
-
-console.log(timer.time()); // { s: 36, ms: 674, us: 616, ns: 145 }
+console.log(timer.ms()); // 37606
+console.log(timer.ms()); // 91843
+console.log(timer.ms()); // 135377
 ```
 
-### .stop()
-stops the timer. can be chained. The timer can be started again by calling `.start()` which clears recorded values. 
+### .time
+returns the elapsed time as an object of time fractions while timer is running or when stopped.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">object (Time)</td>
+  </tr>
+</table>
+
+* `ms`: milliseconds
+* `s`: seconds
+* `m`: minutes
+* `h`: hours
+* `d`: days
+
+```js
+console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 7, ms: 921 }
+console.log(timer.time()); // { d: 0, h: 0, m: 4, s: 44, ms: 321 }
+console.log(timer.time()); // { d: 0, h: 3, m: 55, s: 12, ms: 910 }
+```
+
+### .stop
+stops the timer. The timer can be started again by calling `.start()` which clears recorded values. 
 
 ```js
 timer.stop();
