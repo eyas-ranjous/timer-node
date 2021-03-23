@@ -6,9 +6,9 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
 
 \[**Start**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Stop**\]
 
-✓ &nbsp; It does **NOT** use setInterval/setTimeout/process<br />
-✓ &nbsp; It works in **Javascript** & **Typescript**<br />
-✓ &nbsp; It works in **Nodejs** & **Reactjs**
+🟧 &nbsp; It does **NOT** use setInterval/setTimeout/process<br />
+🟩 &nbsp; It works in **Javascript** & **Typescript**<br />
+🟦 &nbsp; It works in **Nodejs** & **Reactjs**
 
 # Table of Contents
 * [Install](#install)
