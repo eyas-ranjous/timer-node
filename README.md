@@ -2,7 +2,11 @@
 
 [![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A timestamp-based timer with pause/resume capability that enables recording elapsed time and formatting the result.
+A timestamp-based timer that enables recording elapsed time and formatting the result.
+
+* It does NOT use setInterval/setTimeout/process.
+* It works in javascript & typescript.
+* It works in nodejs & reactjs.
 
 # Table of Contents
 * [Install](#install)
@@ -144,7 +148,7 @@ returns true if the timer is paused, false if timer is not started or it's been 
     <th align="center">return</th>
   </tr>
   <tr>
-    <td align="center">Timer</td>
+    <td align="center">boolean</td>
   </tr>
 </table>
 
