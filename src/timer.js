@@ -31,14 +31,14 @@ class Timer {
       ? endTimestamp
       : undefined;
 
-    const currentTs = (currentStartTimestamp >= startTs
+    const currentTs = (currentStartTimestamp > startTs
       && (!endTs || currentStartTimestamp < endTs))
       ? currentStartTimestamp
-      : undefined;
+      : startTs;
 
     this._label = label || '';
     this._startTimestamp = startTs;
-    this._currentStartTimestamp = currentTs || startTs;
+    this._currentStartTimestamp = currentTs;
     this._endTimestamp = endTs;
     this._pauseCount = pauseCount || 0;
     this._accumulatedMs = accumulatedMs || 0;
