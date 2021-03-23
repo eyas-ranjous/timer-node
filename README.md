@@ -143,7 +143,7 @@ timer.pause();
 ```
 
 ### .isPaused
-returns true if the timer is paused, false if timer is not started or it's been resumed after a pause.
+returns true if the timer is paused.
 
 <table>
   <tr>
@@ -175,7 +175,7 @@ timer.resume();
 ```
 
 ### ms
-returns the total milliseconds of elapsed time while timer is running or when stopped.
+returns the total milliseconds of elapsed running time. It can be measured while timer is running or when stopped.
 
 <table>
   <tr>
@@ -187,13 +187,18 @@ returns the total milliseconds of elapsed time while timer is running or when st
 </table>
 
 ```js
+// when timer is running, calling .ms() will dynamically calculate progressing ms
 console.log(timer.ms()); // 37606
 console.log(timer.ms()); // 91843
 console.log(timer.ms()); // 135377
+
+// when timer is paused or stopped, .ms() will return the same value
+console.log(timer.ms()); // 270754
+console.log(timer.ms()); // 270754
 ```
 
 ### .time
-returns the elapsed time as an object of time fractions while timer is running or when stopped.
+returns the elapsed running time as time fractions. It can be measured while timer is running or when stopped.
 
 <table>
   <tr>
@@ -211,13 +216,72 @@ returns the elapsed time as an object of time fractions while timer is running o
 * `d`: days
 
 ```js
+// when timer is running, calling .time() will dynamically calculate progressing time
 console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 7, ms: 921 }
 console.log(timer.time()); // { d: 0, h: 0, m: 4, s: 44, ms: 321 }
 console.log(timer.time()); // { d: 0, h: 3, m: 55, s: 12, ms: 910 }
+
+// when timer is paused or stopped, .time() will return the same value
+console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
+console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
+```
+
+### .format
+formats the elapsed time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
+
+<table>
+  <tr>
+    <th align="center">params</th>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">template: string</td>
+    <td align="center">string</td>
+  </tr>
+</table>
+
+Template:
+* `%label` for timer label.
+* `%ms` for milliseconds.
+* `%s` for seconds.
+* `%m` for minutes.
+* `%h` for hours.
+* `%d` for days.
+
+```js
+// using the default template
+console.log(timer.format()); // test-timer: 0 d, 1 h, 44 m, 23 s, 977 ms
+
+// using a custom template
+console.log(timer.format('%label [%s] seconds [%ms] ms')); // test-timer [4] seconds [254] ms
+```
+
+### pauseMs
+returns the total milliseconds of paused time. It can be measured while timer is paused or when running.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">number</td>
+  </tr>
+</table>
+
+```js
+// when timer is paused, calling pauseMs will dynamically calculate progressing pause time
+console.log(timer.pauseMs()); // 3878
+console.log(timer.pauseMs()); // 5990
+console.log(timer.pauseMs()); // 7997
+
+// when timer is running, pauseMs will return the same previousely accomulated pauses
+timer.stop();
+console.log(timer.pauseMs()); // 97264
+console.log(timer.pauseMs()); // 97264
 ```
 
 ### .stop
-stops the timer. The timer can be started again by calling `.start()` which clears recorded values. 
+stops the timer. The timer can be started again by calling `.start()` which clears all recorded values. 
 
 ```js
 timer.stop();
@@ -231,24 +295,6 @@ returns true if the timer is stopped, false otherwise.
 
 ```js
 console.log(timer.isStopped()); // true
-```
-
-### .format([template])
-formats the elapsed time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
-
-* `%lbl` for timer label.
-* `%s` for seconds.
-* `%ms` for milliseconds.
-* `%us` for microseconds.
-* `%ns` for nanoseconds.
-
-```js
-// using the default template
-console.log(timer.format()); // test-timer: 4 s, 254 ms, 782 us, 615 ns
-
-// using a custom template
-const custom = '%lbl [%s] s [%ms] ms';
-console.log(timer.format(custom)); // test-timer [4] s [254] ms
 ```
 
 ### .clear()
