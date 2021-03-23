@@ -85,8 +85,11 @@ import { Timer, Time, TimerOptions } from 'timer-node';
 
 ```js
 const timer = new Timer({ label: 'test-timer' });
+```
 
-// or from a past timestamp
+It's also possible to create the timer from a past timestamp. In this case, the timer will be considered started at the past.
+
+```js
 const timer = new Timer({
   label: 'test-timer',
   startTimestamp: 1563074001233 // 2019-07-14 03:13:21.233Z
