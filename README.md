@@ -5,8 +5,8 @@
 A timestamp-based timer that enables recording elapsed time and formatting the result.
 
 ✅&nbsp; It does **NOT** use setInterval/setTimeout/process<br />
-✅&nbsp; It works in **javascript** & **typescript**<br />
-✅&nbsp; It works in **nodejs** & **reactjs**
+✅&nbsp; It works in **Javascript** & **Typescript**<br />
+✅&nbsp; It works in **Nodejs** & **Reactjs**
 
 # Table of Contents
 * [Install](#install)
