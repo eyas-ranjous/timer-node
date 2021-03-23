@@ -420,6 +420,15 @@ console.log(timer.serialize());
 ### clear
 clears the timer values. can be started again by calling `.start()`.
 
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">Timer</td>
+  </tr>
+</table>
+
 ```js
 timer.clear();
 console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 0, ms: 0 }
@@ -428,6 +437,15 @@ console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 0, ms: 0 }
 
 ### Timer.deserialize
 re-construct a timer from its serialized form.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">Timer</td>
+  </tr>
+</table>
 
 ```js
 const timerStr = '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}';
@@ -440,6 +458,17 @@ console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 37, ms: 404 }
 
 ### Timer.benchmark(fn)
 creates a benchmark timer for a function call.
+
+<table>
+  <tr>
+    <th align="center">params</th>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">fn: function</td>
+    <td align="center">Timer</td>
+  </tr>
+</table>
 
 ```js
 const fn = (a) => {
