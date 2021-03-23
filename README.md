@@ -93,7 +93,7 @@ const timer = new Timer({
 });
 ```
 
-### .start
+### start
 starts the timer.
 
 <table>
@@ -109,7 +109,7 @@ starts the timer.
 timer.start();
 ```
 
-### .isStarted
+### isStarted
 returns true if the timer was started.
 
 <table>
@@ -126,7 +126,7 @@ returns true if the timer was started.
 console.log(timer.isStarted()); // true
 ```
 
-### .pause
+### pause
 pauses the timer and memoizes elapsed running time.
 
 <table>
@@ -142,7 +142,7 @@ pauses the timer and memoizes elapsed running time.
 timer.pause();
 ```
 
-### .isPaused
+### isPaused
 returns true if the timer is paused.
 
 <table>
@@ -158,7 +158,7 @@ returns true if the timer is paused.
 console.log(timer.isPaused()); // true
 ```
 
-### .resume()
+### resume
 resumes the timer by creating a new starting timestamp.
 
 <table>
@@ -187,7 +187,7 @@ returns the total milliseconds of elapsed running time. It can be measured while
 </table>
 
 ```js
-// when timer is running, calling .ms() will dynamically calculate progressing ms
+// when timer is running, calling .ms() will dynamically calculate progressing milliseconds
 console.log(timer.ms()); // 37606
 console.log(timer.ms()); // 91843
 console.log(timer.ms()); // 135377
@@ -197,7 +197,7 @@ console.log(timer.ms()); // 270754
 console.log(timer.ms()); // 270754
 ```
 
-### .time
+### time
 returns the elapsed running time as time fractions. It can be measured while timer is running or when stopped.
 
 <table>
@@ -226,7 +226,7 @@ console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
 console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
 ```
 
-### .format
+### format
 formats the elapsed time using a custom or default template. The function replaces the time fractions placeholders in a string. Placeholders are:
 
 <table>
@@ -235,7 +235,7 @@ formats the elapsed time using a custom or default template. The function replac
     <th align="center">return</th>
   </tr>
   <tr>
-    <td align="center">template: string</td>
+    <td align="center">*template*: string</td>
     <td align="center">string</td>
   </tr>
 </table>
@@ -269,40 +269,133 @@ returns the total milliseconds of paused time. It can be measured while timer is
 </table>
 
 ```js
-// when timer is paused, calling pauseMs will dynamically calculate progressing pause time
+// when timer is paused, calling pauseMs will dynamically calculate progressing pause milliseconds
 console.log(timer.pauseMs()); // 3878
 console.log(timer.pauseMs()); // 5990
 console.log(timer.pauseMs()); // 7997
 
-// when timer is running, pauseMs will return the same previousely accomulated pauses
+// when timer is resumed, pauseMs will return the same previousely accomulated pauses
 timer.stop();
 console.log(timer.pauseMs()); // 97264
 console.log(timer.pauseMs()); // 97264
 ```
 
-### .stop
-stops the timer. The timer can be started again by calling `.start()` which clears all recorded values. 
+### pauseTime
+returns the pause time as time fractions. It can be measured while timer is paused or when running.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">object (Time)</td>
+  </tr>
+</table>
+
+* `ms`: milliseconds
+* `s`: seconds
+* `m`: minutes
+* `h`: hours
+* `d`: days
+
+```js
+// when timer is paused, calling pauseMs will dynamically calculate progressing pause time
+console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 4, ms: 675 }
+console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 6, ms: 328 }
+console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 7, ms: 904 }
+
+// when timer is resumed, pauseMs will return the same previousely accomulated pauses
+console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
+console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
+```
+
+### pauseCount
+returns the number of times the timer was paused.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">number</td>
+  </tr>
+</table>
+
+```js
+console.log(timer.pauseCount()); // 2
+```
+
+### stop
+stops the timer. The timer can be started again by calling `.start()` which clears all recorded values.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">Timer</td>
+  </tr>
+</table>
 
 ```js
 timer.stop();
 
-console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
-console.log(timer.time()); // { s: 85, ms: 39, us: 492, ns: 853 }
+console.log(timer.time()); // { d: 0, h: 0, m: 2, s: 44, ms: 453 }
+console.log(timer.time()); // { d: 0, h: 0, m: 2, s: 44, ms: 453 }
 ```
 
-### .isStopped()
-returns true if the timer is stopped, false otherwise.
+### isStopped
+checks if the timer has been stopped.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">boolean</td>
+  </tr>
+</table>
 
 ```js
 console.log(timer.isStopped()); // true
 ```
 
-### .clear()
+### serialize
+serializes the timer in its current state.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">string</td>
+  </tr>
+</table>
+
+```js
+console.log(timer.serialize());
+// '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}'
+```
+
+### clear
 clears the timer values. can be started again by calling `.start()`.
 
 ```js
 timer.clear();
-console.log(timer.time()); // null
+console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 0, ms: 0 }
+console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 0, ms: 0 }
+```
+
+### Timer.deserialize
+re-construct a timer from its serialized form.
+
+```js
+const timerStr = '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}';
+
+const timer = Timer.deserialize(timerStr);
+
+console.log(timer.isStopped()); // true
+console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 37, ms: 404 }
 ```
 
 ### Timer.benchmark(fn)
@@ -318,8 +411,8 @@ const fn = (a) => {
 }
 
 const benchmark = Timer.benchmark(fn.bind(fn, 5));
-console.log(benchmark.time()); // { s: 0, ms: 53, us: 193, ns: 368 }
-console.log(benchmark.format()); // bound fn: 0 s, 53 ms, 193 us, 368 ns
+console.log(benchmark.time()); // { d: 0, h: 0, m: 0, s: 0, ms: 53 }
+console.log(benchmark.format('%label: %ms ms')); // bound fn: 53 ms
 ```
 
 ## Build
