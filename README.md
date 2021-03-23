@@ -4,6 +4,8 @@
 
 A timestamp-based timer that enables recording elapsed time and formatting the result.
 
+\[start_timestamp\]---ms---\[pause\]--->\[resume\]---ms---\[pause\]--->\[resume\]---ms---\[stop_timestamp\]
+
 ✅&nbsp; It does **NOT** use setInterval/setTimeout/process<br />
 ✅&nbsp; It works in **Javascript** & **Typescript**<br />
 ✅&nbsp; It works in **Nodejs** & **Reactjs**
