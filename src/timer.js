@@ -310,7 +310,7 @@ class Timer {
       throw new Error('Timer.benchmark expects a function');
     }
 
-    const timer = new Timer(fn.name).start();
+    const timer = new Timer({ label: fn.name }).start();
     fn();
     return timer.stop();
   }
