@@ -23,7 +23,7 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
   * [resume](#resume)
   * [ms](#ms)
   * [time](#time)
-  * [format](#formattemplate)
+  * [format](#format)
   * [pauseMs](#pauseMs)
   * [pauseCount](#pauseMs)
   * [pauseTime](#pauseTime)
@@ -31,8 +31,9 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
   * [isStopped](#isstopped)
   * [stoppedAt](#stoppedat)
   * [serialize](#serialize)
+  * [getLabel](#getlabel)
   * [clear](#clear)
-  * [Timer.deserialize](#deserialize)
+  * [Timer.deserialize](#timerdeserialize)
   * [Timer.benchmark](#timerbenchmarkfn)
  * [Build](#build)
  * [License](#license)
@@ -95,6 +96,9 @@ const timer = new Timer({
   label: 'test-timer',
   startTimestamp: 1563074001233 // 2019-07-14 03:13:21.233Z
 });
+
+console.log(timer.isStarted()); // true
+console.log(timer.time()); // { d: 619, h: 16, m: 26, s: 11, ms: 207 }
 ```
 
 ### start
@@ -416,6 +420,22 @@ serializes the timer in its current state.
 ```js
 console.log(timer.serialize());
 // '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}'
+```
+
+### getLabel
+returns the timer's label
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">string</td>
+  </tr>
+</table>
+
+```js
+console.log(timer.getLabel()); // test-timer
 ```
 
 ### clear
