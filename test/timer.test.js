@@ -118,7 +118,7 @@ describe('Timer tests', () => {
         expect(timer.isStopped()).to.equal(false);
         expect(timer.isStarted()).to.equal(true);
         expect(timer.isPaused()).to.equal(true);
-        expect(timer.isRunning()).to.equal(true);
+        expect(timer.isRunning()).to.equal(false);
         done();
       }, 100);
     });
