@@ -218,7 +218,7 @@ timer.isRunning(); // true
 
 
 ### ms
-returns the running duration in milliseconds. It can be measured while timer is running or when stopped.
+returns the running duration in milliseconds. It can be measured while timer is running or when paused or stopped.
 
 <table>
   <tr>
