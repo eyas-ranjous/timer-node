@@ -1,6 +1,6 @@
 {
   "name": "timer-node",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "a simple timer in nodejs",
   "main": "index.js",
   "scripts": {

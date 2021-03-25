@@ -6,12 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.2] - 2021-03-25
+
+### Fixed
+- isRunning.
+- README.
+
+
 ## [5.0.1] - 2021-03-24
 
 ### Fixed
 - benchmark timer label.
 - README.
-
 
 ## [5.0.0] - 2021-03-23
 
