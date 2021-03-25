@@ -270,7 +270,7 @@ console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
 ```
 
 ### format
-formats running duration using a custom or default template.
+formats the running duration using a custom or default template.
 
 <table>
   <tr>
