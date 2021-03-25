@@ -21,6 +21,7 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
   * [pause](#pause)
   * [isPaused](#ispaused)
   * [resume](#resume)
+  * [isRunning](#isrunning)
   * [ms](#ms)
   * [time](#time)
   * [format](#format)
@@ -199,8 +200,25 @@ resumes the timer by creating a new starting timestamp.
 timer.resume();
 ```
 
+### isRunning
+returns true if the timer is started and not paused or stopped.
+
+<table>
+  <tr>
+    <th align="center">return</th>
+  </tr>
+  <tr>
+    <td align="center">boolean</td>
+  </tr>
+</table>
+
+```js
+timer.isRunning(); // true
+```
+
+
 ### ms
-returns the total milliseconds of elapsed running time. It can be measured while timer is running or when stopped.
+returns the running duration in milliseconds. It can be measured while timer is running or when paused or stopped.
 
 <table>
   <tr>
@@ -223,7 +241,7 @@ console.log(timer.ms()); // 270754
 ```
 
 ### time
-returns the elapsed running time as time fractions. It can be measured while timer is running or when stopped.
+returns the running duration as time fractions. It can be measured while timer is running or when stopped.
 
 <table>
   <tr>
@@ -252,7 +270,7 @@ console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
 ```
 
 ### format
-formats the elapsed time using a custom or default template.
+formats the running duration using a custom or default template.
 
 <table>
   <tr>
@@ -283,7 +301,7 @@ console.log(timer.format('%label [%s] seconds [%ms] ms')); // test-timer [4] sec
 ```
 
 ### pauseMs
-returns the total milliseconds of paused time. It can be measured while timer is paused or when running.
+returns the pause duration in milliseconds. It can be measured while timer is paused or when running.
 
 <table>
   <tr>
@@ -307,7 +325,7 @@ console.log(timer.pauseMs()); // 97264
 ```
 
 ### pauseTime
-returns the pause time as time fractions. It can be measured while timer is paused or when running.
+returns the pause duration as time fractions. It can be measured while timer is paused or when running.
 
 <table>
   <tr>

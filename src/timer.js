@@ -81,7 +81,7 @@ class Timer {
    * @return {boolean}
    */
   isRunning() {
-    return this.isStarted() && !this.isStopped();
+    return this.isStarted() && !this.isPaused() && !this.isStopped();
   }
 
   /**
