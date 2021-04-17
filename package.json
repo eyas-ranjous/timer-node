@@ -1,14 +1,14 @@
 {
   "name": "timer-node",
-  "version": "5.0.2",
-  "description": "a simple timer in nodejs",
+  "version": "5.0.3",
+  "description": "A timestamp-based timer that enables recording elapsed time and formatting the result.",
   "main": "index.js",
   "scripts": {
     "test": "grunt test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/js-shelf/timer-node.git"
+    "url": "git+https://github.com/eyas-ranjous/timer-node.git"
   },
   "keywords": [
     "timer",
@@ -19,9 +19,9 @@
   "author": "Eyas Ranjous <https://github.com/eyas-ranjous>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/js-shelf/timer-node/issues"
+    "url": "https://github.com/eyas-ranjous/timer-node/issues"
   },
-  "homepage": "https://github.com/js-shelf/timer-node#readme",
+  "homepage": "https://github.com/eyas-ranjous/timer-node#readme",
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^6.7.2",
