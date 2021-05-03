@@ -181,6 +181,12 @@ describe('Timer tests', () => {
         `test-timer: 0 d, 0 h, 0 m, ${time.s} s, ${time.ms} ms`
       );
     });
+
+    it('formats time with a custom template', () => {
+      const time = timer.time();
+      expect(timer.format('%s s %ms ms'))
+        .to.equal(`${time.s} s ${time.ms} ms`);
+    });
   });
 
   describe('.serialize()', () => {

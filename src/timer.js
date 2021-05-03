@@ -188,11 +188,11 @@ class Timer {
     const d = Math.floor(h / 24);
 
     return {
-      d,
-      h: h % 24,
-      m: m % 60,
+      ms: ms % 1000,
       s: s % 60,
-      ms: ms % 1000
+      m: m % 60,
+      h: h % 24,
+      d
     };
   }
 
