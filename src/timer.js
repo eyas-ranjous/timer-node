@@ -251,11 +251,11 @@ class Timer {
     const time = this.time();
     return template
       .replace('%label', this._label ? `${this._label}: ` : '')
-      .replace('%d', time.d)
-      .replace('%h', time.h)
-      .replace('%m', time.m)
+      .replace('%ms', time.ms)
       .replace('%s', time.s)
-      .replace('%ms', time.ms);
+      .replace('%m', time.m)
+      .replace('%h', time.h)
+      .replace('%d', time.d);
   }
 
   /**
