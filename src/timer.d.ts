@@ -1,9 +1,9 @@
 export interface Time {
-  d: number;
-  h: number;
-  m: number;
-  s: number;
   ms: number;
+  s: number;
+  m: number;
+  h: number;
+  d: number;
 }
 
 export interface TimerOptions {
