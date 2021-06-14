@@ -2,12 +2,11 @@
 
 [![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A timestamp-based timer that enables recording elapsed time and formatting the result.
+A timestamp-based timer that enables recording elapsed time and formatting the result. It does **NOT** use *setInterval*, *setTimeout* or *process*
 
 \[**Start**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Stop**\]
 
-🔹 &nbsp; It does **NOT** use *setInterval*, *setTimeout* or *process*<br />
-🔹 &nbsp; It works in Javascript ✔️ Typescript ✔️ Nodejs ✔️ and Reactjs ✔️
+<img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
 
 # Contents
 * [Install](#install)
