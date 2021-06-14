@@ -66,7 +66,7 @@ import { Timer, Time, TimerOptions } from 'timer-node';
     <th align="center">params</th>
   </tr>
   <tr>
-    <td align="center">options: object (TimerOptions)</td>
+    <td align="center">options: TimerOptions</td>
   </tr>
 </table>
 
