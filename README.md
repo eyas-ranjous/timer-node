@@ -9,12 +9,12 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
 🔹 &nbsp; It does **NOT** use *setInterval*, *setTimeout* or *process*<br />
 🔹 &nbsp; It works in Javascript ✔️ Typescript ✔️ Nodejs ✔️ and Reactjs ✔️
 
-# Table of Contents
+# Contents
 * [Install](#install)
 * [API](#api)
   * [require](#require)
   * [import](#import)
-  * [new](#new)
+  * [constructor](#constructor)
   * [start](#start)
   * [isStarted](#isstarted)
   * [startedAt](#startedat)
@@ -49,33 +49,17 @@ npm install --save timer-node
 
 ### require
 
-#### JS
-
 ```js
 const { Timer } = require('timer-node');
 ```
 
-#### TS
-
-```js
-const { Timer, Time, TimerOptions } = require('timer-node');
-```
-
 ### import
-
-#### JS
-
-```js
-import { Timer } from 'timer-node';
-```
-
-#### TS
 
 ```js
 import { Timer, Time, TimerOptions } from 'timer-node';
 ```
 
-### new
+### constructor
 
 <table>
   <tr>
@@ -215,7 +199,6 @@ returns true if the timer is started and not paused or stopped.
 ```js
 timer.isRunning(); // true
 ```
-
 
 ### ms
 returns the running duration in milliseconds. It can be measured while timer is running or when paused or stopped.
