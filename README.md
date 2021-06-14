@@ -2,19 +2,18 @@
 
 [![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A timestamp-based timer that enables recording elapsed time and formatting the result.
+A timestamp-based timer that enables recording elapsed time and formatting the result. It does **NOT** use *setInterval*, *setTimeout* or *process*
 
 \[**Start**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Stop**\]
 
-🔹 &nbsp; It does **NOT** use *setInterval*, *setTimeout* or *process*<br />
-🔹 &nbsp; It works in Javascript ✔️ Typescript ✔️ Nodejs ✔️ and Reactjs ✔️
+<img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
 
-# Table of Contents
+# Contents
 * [Install](#install)
+* [require](#require)
+* [import](#import)
 * [API](#api)
-  * [require](#require)
-  * [import](#import)
-  * [new](#new)
+  * [constructor](#constructor)
   * [start](#start)
   * [isStarted](#isstarted)
   * [startedAt](#startedat)
@@ -45,44 +44,28 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
 npm install --save timer-node
 ```
 
-## API
-
-### require
-
-#### JS
+## require
 
 ```js
 const { Timer } = require('timer-node');
 ```
 
-#### TS
-
-```js
-const { Timer, Time, TimerOptions } = require('timer-node');
-```
-
-### import
-
-#### JS
-
-```js
-import { Timer } from 'timer-node';
-```
-
-#### TS
+## import
 
 ```js
 import { Timer, Time, TimerOptions } from 'timer-node';
 ```
 
-### new
+## API
+
+### constructor
 
 <table>
   <tr>
     <th align="center">params</th>
   </tr>
   <tr>
-    <td align="center">options: object (TimerOptions)</td>
+    <td align="center">options: TimerOptions</td>
   </tr>
 </table>
 
@@ -215,7 +198,6 @@ returns true if the timer is started and not paused or stopped.
 ```js
 timer.isRunning(); // true
 ```
-
 
 ### ms
 returns the running duration in milliseconds. It can be measured while timer is running or when paused or stopped.
