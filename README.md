@@ -11,9 +11,9 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
 
 # Contents
 * [Install](#install)
+* [require](#require)
+* [import](#import)
 * [API](#api)
-  * [require](#require)
-  * [import](#import)
   * [constructor](#constructor)
   * [start](#start)
   * [isStarted](#isstarted)
@@ -45,19 +45,19 @@ A timestamp-based timer that enables recording elapsed time and formatting the r
 npm install --save timer-node
 ```
 
-## API
-
-### require
+## require
 
 ```js
 const { Timer } = require('timer-node');
 ```
 
-### import
+## import
 
 ```js
 import { Timer, Time, TimerOptions } from 'timer-node';
 ```
+
+## API
 
 ### constructor
 
