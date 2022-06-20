@@ -1,6 +1,6 @@
 # timer-node
 
-[![build:?](https://travis-ci.org/eyas-ranjous/timer-node.svg?branch=master)](https://travis-ci.org/eyas-ranjous/timer-node) [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
+[![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
 A timestamp-based timer that enables recording elapsed time and formatting the result. It does **NOT** use *setInterval*, *setTimeout* or *process*
 
@@ -60,20 +60,11 @@ import { Timer, Time, TimerOptions } from 'timer-node';
 
 ### constructor
 
-<table>
-  <tr>
-    <th align="center">params</th>
-  </tr>
-  <tr>
-    <td align="center">options: TimerOptions</td>
-  </tr>
-</table>
-
 ```js
 const timer = new Timer({ label: 'test-timer' });
 ```
 
-It's also possible to create the timer from a past timestamp. In this case, the timer will be considered started in the past.
+It's also possible to create the timer from a past timestamp.
 
 ```js
 const timer = new Timer({
@@ -88,31 +79,12 @@ console.log(timer.time()); // { d: 619, h: 16, m: 26, s: 11, ms: 207 }
 ### start
 starts the timer.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">Timer</td>
-  </tr>
-</table>
-
 ```js
 timer.start();
 ```
 
 ### isStarted
-returns true if the timer was started.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">boolean</td>
-  </tr>
-</table>
-
+returns true if the timer is started.
 
 ```js
 console.log(timer.isStarted()); // true
@@ -121,79 +93,33 @@ console.log(timer.isStarted()); // true
 ### startedAt
 returns the starting timestamp.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">number</td>
-  </tr>
-</table>
-
 ```js
 console.log(timer.startedAt()); // 1616535899945
 ```
 
-
 ### pause
 pauses the timer and memoizes elapsed running time.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">Timer</td>
-  </tr>
-</table>
 
 ```js
 timer.pause();
 ```
 
 ### isPaused
-returns true if the timer is paused.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">boolean</td>
-  </tr>
-</table>
+checks if the timer is paused.
 
 ```js
 console.log(timer.isPaused()); // true
 ```
 
 ### resume
-resumes the timer by creating a new starting timestamp.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">Timer</td>
-  </tr>
-</table>
+resumes the timer.
 
 ```js
 timer.resume();
 ```
 
 ### isRunning
-returns true if the timer is started and not paused or stopped.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">boolean</td>
-  </tr>
-</table>
+checks if the timer is started and not paused or stopped.
 
 ```js
 timer.isRunning(); // true
@@ -201,15 +127,6 @@ timer.isRunning(); // true
 
 ### ms
 returns the running duration in milliseconds. It can be measured while timer is running or when paused or stopped.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">number</td>
-  </tr>
-</table>
 
 ```js
 // when timer is running, calling .ms() will dynamically calculate progressing milliseconds
@@ -223,16 +140,7 @@ console.log(timer.ms()); // 270754
 ```
 
 ### time
-returns the running duration as time fractions. It can be measured while timer is running or when stopped.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">object (Time)</td>
-  </tr>
-</table>
+returns the running duration as an object of time fractions. It can be measured while timer is running or when stopped.
 
 * `ms`: milliseconds
 * `s`: seconds
@@ -254,17 +162,6 @@ console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
 ### format
 formats the running duration using a custom or default template.
 
-<table>
-  <tr>
-    <th align="center">params</th>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center"><i>template</i>: string</td>
-    <td align="center">string</td>
-  </tr>
-</table>
-
 The function replaces time placeholders in a string. Placeholders are:
 
 * `%label` for timer label.
@@ -285,15 +182,6 @@ console.log(timer.format('%label [%s] seconds [%ms] ms')); // test-timer [4] sec
 ### pauseMs
 returns the pause duration in milliseconds. It can be measured while timer is paused or when running.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">number</td>
-  </tr>
-</table>
-
 ```js
 // when timer is paused, calling pauseMs will dynamically calculate progressing pause milliseconds
 console.log(timer.pauseMs()); // 3878
@@ -307,16 +195,7 @@ console.log(timer.pauseMs()); // 97264
 ```
 
 ### pauseTime
-returns the pause duration as time fractions. It can be measured while timer is paused or when running.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">object (Time)</td>
-  </tr>
-</table>
+returns the pause duration as an object of time fractions. It can be measured while timer is paused or when running.
 
 * `ms`: milliseconds
 * `s`: seconds
@@ -339,30 +218,12 @@ console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
 ### pauseCount
 returns the number of times the timer was paused.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">number</td>
-  </tr>
-</table>
-
 ```js
 console.log(timer.pauseCount()); // 2
 ```
 
 ### stop
 stops the timer. The timer can be started again by calling `.start()` which clears all recorded values.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">Timer</td>
-  </tr>
-</table>
 
 ```js
 timer.stop();
@@ -374,30 +235,12 @@ console.log(timer.time()); // { d: 0, h: 0, m: 2, s: 44, ms: 453 }
 ### isStopped
 checks if the timer has been stopped.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">boolean</td>
-  </tr>
-</table>
-
 ```js
 console.log(timer.isStopped()); // true
 ```
 
 ### stoppedAt
 returns the stop timestamp.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">number</td>
-  </tr>
-</table>
 
 ```js
 console.log(timer.stoppedAt()); // undefined
@@ -408,15 +251,6 @@ console.log(timer.stoppedAt()); // 1616535948456
 ### serialize
 serializes the timer in its current state.
 
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">string</td>
-  </tr>
-</table>
-
 ```js
 console.log(timer.serialize());
 // '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}'
@@ -425,30 +259,12 @@ console.log(timer.serialize());
 ### getLabel
 returns the timer's label
 
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">string</td>
-  </tr>
-</table>
-
 ```js
 console.log(timer.getLabel()); // test-timer
 ```
 
 ### clear
 clears the timer values. can be started again by calling `.start()`.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">Timer</td>
-  </tr>
-</table>
 
 ```js
 timer.clear();
@@ -458,15 +274,6 @@ console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 0, ms: 0 }
 
 ### Timer.deserialize
 re-construct a timer from its serialized form.
-
-<table>
-  <tr>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">Timer</td>
-  </tr>
-</table>
 
 ```js
 const timerStr = '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}';
@@ -479,17 +286,6 @@ console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 37, ms: 404 }
 
 ### Timer.benchmark(fn)
 creates a benchmark timer for a function call.
-
-<table>
-  <tr>
-    <th align="center">params</th>
-    <th align="center">return</th>
-  </tr>
-  <tr>
-    <td align="center">fn: function</td>
-    <td align="center">Timer</td>
-  </tr>
-</table>
 
 ```js
 const fn = (a) => {
