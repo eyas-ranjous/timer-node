@@ -1,6 +1,6 @@
 {
   "name": "timer-node",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "A timestamp-based timer that enables recording elapsed time and formatting the result.",
   "main": "index.js",
   "scripts": {
