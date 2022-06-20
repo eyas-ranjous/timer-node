@@ -2,7 +2,9 @@
 
 [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
 
-A timestamp-based timer that enables recording elapsed time and formatting the result. It does **NOT** use *setInterval*, *setTimeout* or *process*
+A timestamp-based timer that enables recording elapsed time and formatting the result.
+
+It does **NOT** use *setInterval*, *setTimeout* or *process*
 
 \[**Start**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Stop**\]
 
