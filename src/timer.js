@@ -36,9 +36,14 @@ class Timer {
       ? currentStartTimestamp
       : startTs;
 
+    const isStarted = startTimestamp >= 0;
+    const isRunning = currentStartTimestamp !== undefined;
+    const wasPausedAtLeastOneTime = pauseCount > 0;
+    const isPaused = isStarted && !isRunning && wasPausedAtLeastOneTime;
+
     this._label = label || '';
     this._startTimestamp = startTs;
-    this._currentStartTimestamp = currentTs;
+    this._currentStartTimestamp = !isPaused ? currentTs : undefined;
     this._endTimestamp = endTs;
     this._pauseCount = pauseCount || 0;
     this._accumulatedMs = accumulatedMs || 0;
