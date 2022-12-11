@@ -1,6 +1,8 @@
 const { expect } = require('chai');
 const { Timer } = require('../src/timer');
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 describe('Timer tests', () => {
   const timer = new Timer({ label: 'test-timer' });
 
@@ -240,14 +242,10 @@ describe('Timer tests', () => {
       await sleep(100);
       newTimer.pause();
 
-      const timerFromState = Timer.deserialize(newTimer.serialize()); 
+      const timerFromState = Timer.deserialize(newTimer.serialize());
 
       expect(timerFromState.serialize()).to.deep.equal(newTimer.serialize());
     });
-    
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
   });
 
   describe('Timer.benchmark(fn)', () => {
