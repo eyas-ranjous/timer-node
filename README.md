@@ -5,14 +5,6 @@
 
 A **lightweight** timestamp-based timer for measuring elapsed time in Node.js or the browser. This library **does not** rely on `setInterval`, `setTimeout`, or the event loop—rather, it calculates durations from system timestamps.
 
-<br>
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg" alt="timer-node illustration" width="350">
-</p>
-
----
-
 ## Table of Contents
 
 - [Features](#features)
@@ -32,8 +24,6 @@ A **lightweight** timestamp-based timer for measuring elapsed time in Node.js or
 - [Build](#build)
 - [License](#license)
 
----
-
 ## Features
 
 - **Intuitive API** for starting, pausing, resuming, and stopping a timer.
@@ -45,17 +35,11 @@ A **lightweight** timestamp-based timer for measuring elapsed time in Node.js or
 - **Zero dependencies**.
 - **Comes with TypeScript definitions** for out-of-the-box TS support.
 
----
-
 ## Installation
 
 ```bash
 npm install --save timer-node
 ```
-
-Requires Node.js v6.0 or higher.
-
----
 
 ## Usage
 
@@ -107,8 +91,6 @@ setTimeout(() => {
   }, 1000);
 }, 1000);
 ```
-
----
 
 ## API Reference
 
@@ -221,8 +203,6 @@ new Timer(options?: TimerOptions)
   Returns the stopped timer so you can check `.ms()`, `.time()`, etc.  
   Throws an error if `fn` is not a function.
 
----
-
 ## Build
 
 To build the library yourself (for development or contributing):
@@ -233,8 +213,6 @@ npm run build
 ```
 
 (Or use `grunt build` if that’s your primary task runner.)
-
----
 
 ## License
 
