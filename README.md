@@ -1,312 +1,245 @@
 # timer-node
 
-[![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node) [![npm](https://img.shields.io/badge/node-%3E=%206.0-blue.svg)](https://www.npmjs.com/package/timer-node)
+[![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node)
+[![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node)
 
-A timestamp-based timer that enables recording elapsed time and formatting the result.
+A **lightweight** timestamp-based timer for measuring elapsed time in Node.js or the browser. This library **does not** rely on `setInterval`, `setTimeout`, or the event loop—rather, it calculates durations from system timestamps.
 
-It does **NOT** use *setInterval*, *setTimeout* or *process*
+<br>
 
-\[**Start**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Pause**\]--pause ms--\[**Resume**\]---ms---\[**Stop**\]
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg" alt="timer-node illustration" width="350">
+</p>
 
-<img src="https://user-images.githubusercontent.com/6517308/121813242-859a9700-cc6b-11eb-99c0-49e5bb63005b.jpg">
+---
 
-# Contents
-* [Install](#install)
-* [require](#require)
-* [import](#import)
-* [API](#api)
-  * [constructor](#constructor)
-  * [start](#start)
-  * [isStarted](#isstarted)
-  * [startedAt](#startedat)
-  * [pause](#pause)
-  * [isPaused](#ispaused)
-  * [resume](#resume)
-  * [isRunning](#isrunning)
-  * [ms](#ms)
-  * [time](#time)
-  * [format](#format)
-  * [pauseMs](#pauseMs)
-  * [pauseCount](#pauseMs)
-  * [pauseTime](#pauseTime)
-  * [stop](#stop)
-  * [isStopped](#isstopped)
-  * [stoppedAt](#stoppedat)
-  * [serialize](#serialize)
-  * [getLabel](#getlabel)
-  * [clear](#clear)
-  * [Timer.deserialize](#timerdeserialize)
-  * [Timer.benchmark](#timerbenchmarkfn)
- * [Build](#build)
- * [License](#license)
+## Table of Contents
 
-## Install
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Quick Start (JavaScript)](#quick-start-javascript)
+  - [TypeScript Support](#typescript-support)
+  - [Basic Example](#basic-example)
+- [API Reference](#api-reference)
+  - [Constructor](#constructor)
+  - [Start / Pause / Resume / Stop](#start--pause--resume--stop)
+  - [Measuring Elapsed Time](#measuring-elapsed-time)
+  - [Pause Information](#pause-information)
+  - [Formatting](#formatting)
+  - [Other Methods](#other-methods)
+  - [Static Methods](#static-methods)
+- [Build](#build)
+- [License](#license)
 
-```
+---
+
+## Features
+
+- **Intuitive API** for starting, pausing, resuming, and stopping a timer.
+- **Accurate elapsed-time calculation** (no event loops or `setInterval`).
+- **Multiple states** (running, paused, stopped).
+- **Formatting** for output (`%label`, `%d`, `%h`, `%m`, `%s`, `%ms`).
+- **Serialization** and **deserialization** for saving and restoring timer state.
+- **Benchmark function** to measure execution time of synchronous code.
+- **Zero dependencies**.
+- **Comes with TypeScript definitions** for out-of-the-box TS support.
+
+---
+
+## Installation
+
+```bash
 npm install --save timer-node
 ```
 
-## require
+Requires Node.js v6.0 or higher.
+
+---
+
+## Usage
+
+### Quick Start (JavaScript)
 
 ```js
 const { Timer } = require('timer-node');
-```
 
-## import
-
-```js
-import { Timer, Time, TimerOptions } from 'timer-node';
-```
-
-## API
-
-### constructor
-
-```js
-const timer = new Timer({ label: 'test-timer' });
-```
-
-It's also possible to create the timer from a past timestamp.
-
-```js
-const timer = new Timer({
-  label: 'test-timer',
-  startTimestamp: 1563074001233 // 2019-07-14 03:13:21.233Z
-});
-
-console.log(timer.isStarted()); // true
-console.log(timer.time()); // { d: 619, h: 16, m: 26, s: 11, ms: 207 }
-```
-
-### start
-starts the timer.
-
-```js
+const timer = new Timer({ label: 'my-timer' });
 timer.start();
+
+// Perform a task...
+
+console.log(timer.ms());   // e.g., 250 (ms)
+console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 0, ms: 250 }
 ```
 
-### isStarted
-returns true if the timer is started.
+### TypeScript Support
 
-```js
-console.log(timer.isStarted()); // true
+```ts
+import { Timer, TimerOptions, Time } from 'timer-node';
+
+const options: TimerOptions = { label: 'ts-timer' };
+const tsTimer = new Timer(options);
+
+tsTimer.start();
+// ...
+console.log(tsTimer.time()); // Time object
 ```
 
-### startedAt
-returns the starting timestamp.
+### Basic Example
 
 ```js
-console.log(timer.startedAt()); // 1616535899945
+const { Timer } = require('timer-node');
+
+const timer = new Timer({ label: 'demo' });
+
+timer.start();
+// ... some asynchronous or synchronous operations ...
+
+setTimeout(() => {
+  timer.pause();
+  console.log('Elapsed so far:', timer.ms(), 'milliseconds');
+
+  timer.resume();
+  setTimeout(() => {
+    timer.stop();
+    console.log('Final time:', timer.time());
+  }, 1000);
+}, 1000);
 ```
 
-### pause
-pauses the timer and memoizes elapsed running time.
+---
 
-```js
-timer.pause();
+## API Reference
+
+### Constructor
+
+```ts
+new Timer(options?: TimerOptions)
 ```
+- **`label`** *(string, optional)*: A custom label for identification.
+- **`startTimestamp`** *(number, optional)*: If you want to initialize from a past timestamp.
+- **`endTimestamp`** *(number, optional)*: If you have a known stop time.
+- **`currentStartTimestamp`** *(number, optional)*: If the timer is currently running, set the most recent resume time.
+- **`pauseCount`** *(number, optional)*: Number of pauses so far.
+- **`accumulatedMs`** *(number, optional)*: The milliseconds already counted before the current session.
 
-### isPaused
-checks if the timer is paused.
+### Start / Pause / Resume / Stop
 
-```js
-console.log(timer.isPaused()); // true
-```
+- **`start()`**  
+  Starts (or restarts) the timer. If the timer was already running, calling `start()` again reinitializes it by **clearing** previous data.
+  
+- **`pause()`**  
+  Pauses the timer. Time accumulation stops until `resume()` is called.
+  
+- **`resume()`**  
+  Resumes the timer if it was paused. Continues from the previously accumulated time.
+  
+- **`stop()`**  
+  Permanently stops the timer. Once stopped, the time does not increase. You can still read the final value using `time()` or `ms()`.
 
-### resume
-resumes the timer.
+### Measuring Elapsed Time
 
-```js
-timer.resume();
-```
-
-### isRunning
-checks if the timer is started and not paused or stopped.
-
-```js
-timer.isRunning(); // true
-```
-
-### ms
-returns the running duration in milliseconds. It can be measured while timer is running or when paused or stopped.
-
-```js
-// when timer is running, calling .ms() will dynamically calculate progressing milliseconds
-console.log(timer.ms()); // 37606
-console.log(timer.ms()); // 91843
-console.log(timer.ms()); // 135377
-
-// when timer is paused or stopped, .ms() will return the same value
-console.log(timer.ms()); // 270754
-console.log(timer.ms()); // 270754
-```
-
-### time
-returns the running duration as an object of time fractions. It can be measured while timer is running or when stopped.
-
-* `ms`: milliseconds
-* `s`: seconds
-* `m`: minutes
-* `h`: hours
-* `d`: days
-
-```js
-// when timer is running, calling .time() will dynamically calculate progressing time
-console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 7, ms: 921 }
-console.log(timer.time()); // { d: 0, h: 0, m: 4, s: 44, ms: 321 }
-console.log(timer.time()); // { d: 0, h: 3, m: 55, s: 12, ms: 910 }
-
-// when timer is paused or stopped, .time() will return the same value
-console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
-console.log(timer.time()); // { d: 0, h: 4, m: 5, s: 52, ms: 770 }
-```
-
-### format
-formats the running duration using a custom or default template.
-
-The function replaces time placeholders in a string. Placeholders are:
-
-* `%label` for timer label.
-* `%ms` for milliseconds.
-* `%s` for seconds.
-* `%m` for minutes.
-* `%h` for hours.
-* `%d` for days.
-
-```js
-// using the default template
-console.log(timer.format()); // test-timer: 0 d, 1 h, 44 m, 23 s, 977 ms
-
-// using a custom template
-console.log(timer.format('%label [%s] seconds [%ms] ms')); // test-timer [4] seconds [254] ms
-```
-
-### pauseMs
-returns the pause duration in milliseconds. It can be measured while timer is paused or when running.
-
-```js
-// when timer is paused, calling pauseMs will dynamically calculate progressing pause milliseconds
-console.log(timer.pauseMs()); // 3878
-console.log(timer.pauseMs()); // 5990
-console.log(timer.pauseMs()); // 7997
-
-// when timer is resumed, pauseMs will return the same previousely accomulated pauses
-timer.stop();
-console.log(timer.pauseMs()); // 97264
-console.log(timer.pauseMs()); // 97264
-```
-
-### pauseTime
-returns the pause duration as an object of time fractions. It can be measured while timer is paused or when running.
-
-* `ms`: milliseconds
-* `s`: seconds
-* `m`: minutes
-* `h`: hours
-* `d`: days
-
-```js
-// when timer is paused, calling pauseMs will dynamically calculate progressing pause time
-console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 4, ms: 675 }
-console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 6, ms: 328 }
-console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 7, ms: 904 }
-
-// when timer is resumed, pauseMs will return the same previousely accomulated pauses
-timer.resume();
-console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
-console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 12, ms: 143 }
-```
-
-### pauseCount
-returns the number of times the timer was paused.
-
-```js
-console.log(timer.pauseCount()); // 2
-```
-
-### stop
-stops the timer. The timer can be started again by calling `.start()` which clears all recorded values.
-
-```js
-timer.stop();
-
-console.log(timer.time()); // { d: 0, h: 0, m: 2, s: 44, ms: 453 }
-console.log(timer.time()); // { d: 0, h: 0, m: 2, s: 44, ms: 453 }
-```
-
-### isStopped
-checks if the timer has been stopped.
-
-```js
-console.log(timer.isStopped()); // true
-```
-
-### stoppedAt
-returns the stop timestamp.
-
-```js
-console.log(timer.stoppedAt()); // undefined
-timer.stop();
-console.log(timer.stoppedAt()); // 1616535948456
-```
-
-### serialize
-serializes the timer in its current state.
-
-```js
-console.log(timer.serialize());
-// '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}'
-```
-
-### getLabel
-returns the timer's label
-
-```js
-console.log(timer.getLabel()); // test-timer
-```
-
-### clear
-clears the timer values. can be started again by calling `.start()`.
-
-```js
-timer.clear();
-console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 0, ms: 0 }
-console.log(timer.pauseTime()); // { d: 0, h: 0, m: 0, s: 0, ms: 0 }
-```
-
-### Timer.deserialize
-re-construct a timer from its serialized form.
-
-```js
-const timerStr = '{"startTimestamp":1616535216209,"currentStartTimestamp":1616535227790,"endTimestamp":1616535258945,"accumulatedMs":6249,"pauseCount":3,"label":"test"}';
-
-const timer = Timer.deserialize(timerStr);
-
-console.log(timer.isStopped()); // true
-console.log(timer.time()); // { d: 0, h: 0, m: 0, s: 37, ms: 404 }
-```
-
-### Timer.benchmark(fn)
-creates a benchmark timer for a function call.
-
-```js
-const fn = (a) => {
-  let sum = 0;
-  for (let i = 0; i < 10000000; i += 1) {
-    sum += a * i;
+- **`ms()`**  
+  Returns the total elapsed running time (in **milliseconds**). If the timer is paused or stopped, the value remains constant.  
+  
+- **`time()`**  
+  Returns the elapsed time as an object of time fractions:
+  ```ts
+  {
+    d: number;  // days
+    h: number;  // hours
+    m: number;  // minutes
+    s: number;  // seconds
+    ms: number; // remaining milliseconds
   }
-  return sum;
-}
+  ```
 
-const benchmark = Timer.benchmark(fn.bind(fn, 5));
-console.log(benchmark.time()); // { d: 0, h: 0, m: 0, s: 0, ms: 53 }
-console.log(benchmark.format('%label: %ms ms')); // bound fn: 53 ms
-```
+### Pause Information
+
+- **`pauseMs()`**  
+  Returns the total paused duration (in milliseconds). If the timer is paused right now, this keeps increasing until resumed.
+
+- **`pauseTime()`**  
+  Returns the total paused duration as a time object (same format as `time()`).
+
+- **`pauseCount()`**  
+  Returns how many times the timer has been paused.
+
+### Formatting
+
+- **`format(template?: string)`**  
+  Returns a string representation of the elapsed time.  
+  Defaults to `'%label%d d, %h h, %m m, %s s, %ms ms'`.  
+  - Placeholders:
+    - **`%label`**: The timer label plus `': '` if present.
+    - **`%d`**: Days
+    - **`%h`**: Hours
+    - **`%m`**: Minutes
+    - **`%s`**: Seconds
+    - **`%ms`**: Milliseconds
+
+### Other Methods
+
+- **`clear()`**  
+  Resets the timer to an unstarted state (erases start/stop times, accumulated ms, etc.).
+
+- **`isStarted()`**  
+  Checks if the timer has been started at least once.
+
+- **`isPaused()`**  
+  Checks if the timer is currently paused.
+
+- **`isRunning()`**  
+  Checks if the timer is running (started, not paused, and not stopped).
+
+- **`isStopped()`**  
+  Checks if the timer is fully stopped.
+
+- **`startedAt()`**  
+  Returns the timestamp (in ms) when the timer started (or `undefined` if never started).
+
+- **`stoppedAt()`**  
+  Returns the timestamp (in ms) when the timer stopped (or `undefined` if never stopped).
+
+- **`getLabel()`**  
+  Returns the label assigned to the timer.
+
+- **`serialize()`**  
+  Returns a JSON string representing the timer’s current internal state. Useful for saving progress or transferring over a network.
+
+### Static Methods
+
+- **`Timer.deserialize(serializedTimer: string): Timer`**  
+  Re-creates a timer from a JSON string created by `.serialize()`.  
+  ```js
+  const savedTimer = Timer.deserialize(timer.serialize());
+  ```
+
+- **`Timer.benchmark(fn: () => any): Timer`**  
+  Creates a timer, immediately starts it, runs `fn()`, then stops.  
+  Returns the stopped timer so you can check `.ms()`, `.time()`, etc.  
+  Throws an error if `fn` is not a function.
+
+---
 
 ## Build
-```
-grunt build
+
+To build the library yourself (for development or contributing):
+
+```bash
+npm install
+npm run build
 ```
 
+(Or use `grunt build` if that’s your primary task runner.)
+
+---
+
 ## License
-The MIT License. Full License is [here](https://github.com/eyas-ranjous/timer-node/blob/master/LICENSE)
+
+This project is licensed under the **MIT License**. The full license text is available in [LICENSE](https://github.com/eyas-ranjous/timer-node/blob/master/LICENSE).
+`;
+
+fs.writeFileSync('README.md', readmeContent);
+console.log('README.md file created or updated successfully!');
