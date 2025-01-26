@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/timer-node.svg)](https://www.npmjs.com/package/timer-node)
 [![npm](https://img.shields.io/npm/dm/timer-node.svg)](https://www.npmjs.com/package/timer-node)
 
-A **lightweight** JavaScript library for measuring elapsed time in Node.js or the browser without using `setInterval` or `setTimeout`. This library comes with built-in TypeScript type definitions.
+A **lightweight** JavaScript library for measuring elapsed time in Node.js or the browser without using `setInterval` or `setTimeout`. It also has type definitions for TypeScript.
 
 ## Installation
 
@@ -11,17 +11,16 @@ A **lightweight** JavaScript library for measuring elapsed time in Node.js or th
 npm install timer-node
 ```
 
-## Usage (JS & TS)
+## API
+### Import
 
 ```javascript
-// JavaScript
+// JS
 const { Timer } = require('timer-node');
 
-// TypeScript
+// TS
 import { Timer, TimerOptions, Time } from 'timer-node';
 ```
-
-## API Overview
 
 ### Timer Class
 
@@ -103,6 +102,5 @@ console.log('Total elapsed:', timer.time());
 
 ## License
 
-This library is licensed under the MIT License.\
-See [LICENSE](https://github.com/eyas-ranjous/timer-node/blob/master/LICENSE) for details.
+This library is licensed under the MIT License. See [LICENSE](https://github.com/eyas-ranjous/timer-node/blob/master/LICENSE) for details.
 
